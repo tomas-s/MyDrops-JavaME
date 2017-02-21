@@ -8,7 +8,7 @@ Tento soubor slouží jako WIKI našeho projektu.
 - [x] Posielanie JSON
 
 # TODO:
-- [x] Prihlasovanie 
-- [x] Registracia
-- [x] Posielanie JSONs to web server
-- [x] Posielanie JSONs to ESP8622
+- [ ] Prihlasovanie 
+- [ ] Registracia
+- [ ] Posielanie JSONs to web server
+- [ ] Posielanie JSONs to ESP8622
