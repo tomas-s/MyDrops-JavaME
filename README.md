@@ -1,4 +1,4 @@
-Diplomova práca - mobilná aplikácia pre Android
+Diplomova práca - mobilná aplikácia pre Android /n
 Tento soubor slouží jako WIKI našeho projektu.
 
 ## My Drops
@@ -10,5 +10,5 @@ Tento soubor slouží jako WIKI našeho projektu.
 # TODO:
 - [ ] Prihlasovanie 
 - [ ] Registracia
-- [ ] Posielanie JSONs to web server
+- [x] Posielanie JSONs to web server - zatial na jeden, ale funguje 
 - [ ] Posielanie JSONs to ESP8622

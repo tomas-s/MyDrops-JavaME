@@ -51,4 +51,15 @@
         android:layout_height="200dp"
         android:id="@+id/graph"/>
 
+    <Button
+        android:text="Send JSON"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/button3"
+        android:layout_alignEnd="@+id/button3"
+        android:layout_marginBottom="41dp"
+        android:onClick="sendJson"
+        android:id="@+id/button4" />
+
 </RelativeLayout>
