@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/holo_blue_dark"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="false">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="60dp">
+        <TextView
+            android:text="@string/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ffffff"
+            android:textSize="40dp"
+            android:gravity="center"
+            android:id="@+id/textView4"
+            android:textColor="@android:color/holo_blue_dark" />
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="362dp"
+            android:layout_height="wrap_content"
+            android:paddingTop="60dp"
+
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:background="@android:color/holo_blue_dark">
+
+
+
+
+
+        <ImageView android:src="@drawable/icon_login"
+            android:layout_width="wrap_content"
+            android:layout_height="72dp"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center_horizontal" />
+
+        <EditText
+            android:layout_width = "262dp"
+            android:layout_height = "wrap_content"
+            android:id = "@+id/editText"
+            android:hint = "Enter Name"
+            android:focusable = "true"
+            android:textColorHighlight = "#ff7eff15"
+            android:textColorHint = "@android:color/background_light"
+            android:backgroundTint="#FFFFFF"
+            android:layout_marginTop = "46dp"
+            android:layout_below = "@+id/imageView"
+            android:layout_alignParentLeft = "true"
+            android:layout_alignParentStart = "true"
+            android:layout_alignParentRight = "true"
+            android:layout_alignParentEnd = "true" />
+
+
+        <EditText
+            android:layout_width="262dp"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/editText2"
+            android:layout_below="@+id/editText"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignRight="@+id/editText"
+            android:layout_alignEnd="@+id/editText"
+            android:textColorHint="@android:color/background_light"
+            android:backgroundTint="#FFFFFF"
+            android:hint="Password" />
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/btn_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:padding="12dp"
+            android:onClick="authentificaion"
+            android:text="Login"/>
+
+        <TextView android:id="@+id/link_signup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="No account yet? Create one"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="16dip"/>
+
+    </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">My Drops</string>
+    <string name="input_email">Enter email</string>
+    <string name="input_password">Passwird</string>
+    <string name="btn_login">Login</string>
+    <string name="link_signup">My Drops</string>
+    <string name="activity_menu">druha aktivita</string>
+    <string name="button_konfiguruj">Konfiguruj ESP</string>
+    <string name="title_activity_connect_to_esp">ConnectToESP</string>
+    <string name="textInsertData">Set sending time:</string>
+    <string name="buttonOk">Send sending time</string>
+    <string-array name="spinnerSendingTime">
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>12 hours</item>
+        <item>1 day</item>
+        <item>3 days</item>
+        <item>1 week</item>
+        <item>2 weeks</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
