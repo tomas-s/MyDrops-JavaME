@@ -6,8 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.UPDATE_DEVICE_STATS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
-
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -24,13 +23,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SignupActivity"
+            android:windowSoftInputMode="stateHidden">
+        </activity>
         <activity android:name=".MenuActivity" />
         <activity
             android:name=".connectToESP"
             android:label="@string/title_activity_connect_to_esp"
             android:theme="@style/AppTheme" />
-
-        <activity android:name=".GraphActivity"></activity>
+        <activity android:name=".GraphActivity" />
     </application>
 
 </manifest>

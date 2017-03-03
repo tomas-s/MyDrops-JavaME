@@ -81,6 +81,7 @@ public class MenuActivity extends AppCompatActivity {
         else
             startActivity(intent);
 
+
     }
 
     public void showGraph(View view){
@@ -89,35 +90,39 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-    public void sendJson(View view)  {/*
-        Map vehicles = new HashMap();
-        vehicles.put("user_email", "dropssde@gmail.com");
-         String jsonn = "{"+"user_email"+":"+"dropssde@gmail.com}";
-        HttpResponse hr;
-        Uri uri = Uri.parse("http://drops.sde.cz/generateSN");
-         String result = HttpClient.makeRequest("http://httpbin.org/get",jsonn);
-        Toast.makeText(MenuActivity.this, "Mame request" ,Toast.LENGTH_SHORT).show();*/
-
-
+/*
+    public void sendJson(View view)  {
 // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://httpbin.org/post";
+       // queue.
+        String adresa ="http://85.93.125.205:8126/api/login";
 
 
-        JSONObject request = new JSONObject();
+        JSONObject jsonObj = new JSONObject();
         try
         {
-            request.put("user_email", "com");
+            jsonObj.put("email", "t.slizik@centrum.skk");
+            jsonObj.put("password", "netscrol");
         }
         catch(Exception e)
         {
             e.printStackTrace();
+            e.getMessage();
 
         }
         Context sendedContext = getApplicationContext();
-        HttpClient.makeRequest(sendedContext,queue,url,request);
+        HttpClient.makeRequestLogin(sendedContext,queue,adresa,jsonObj);
+
+        Toast.makeText(MenuActivity.this,HttpClient.getResult() ,Toast.LENGTH_SHORT).show();
 
     }
+    public void showText(View view)  {
+        String adresa ="http://85.93.125.205:8126/api/login";
+        Toast.makeText(MenuActivity.this, adresa ,Toast.LENGTH_SHORT).show();
+
+        //Toast.makeText(getApplicationContext(),"Aktivnova nova wifi",Toast.LENGTH_LONG).show();
+
+    }*/
 
 
 }

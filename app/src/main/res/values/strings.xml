@@ -9,6 +9,7 @@
     <string name="title_activity_connect_to_esp">ConnectToESP</string>
     <string name="textInsertData">Set sending time:</string>
     <string name="buttonOk">Send sending time</string>
+
     <string-array name="spinnerSendingTime">
         <item>1 hour</item>
         <item>3 hours</item>
