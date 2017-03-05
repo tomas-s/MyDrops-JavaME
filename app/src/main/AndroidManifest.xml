@@ -25,14 +25,18 @@
         </activity>
         <activity
             android:name=".SignupActivity"
-            android:windowSoftInputMode="stateHidden">
-        </activity>
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".MenuActivity" />
         <activity
             android:name=".connectToESP"
             android:label="@string/title_activity_connect_to_esp"
             android:theme="@style/AppTheme" />
         <activity android:name=".GraphActivity" />
+        <activity
+            android:name=".ShowDevices"
+            android:label="@string/title_activity_show_devices"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".ShowDrops"></activity>
     </application>
 
 </manifest>

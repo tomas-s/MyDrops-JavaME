@@ -84,7 +84,7 @@
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:onClick="fakeauthentificaion"
+            android:onClick="authentificaion"
             android:text="Login"
             android:background="@android:color/holo_blue_light"
             android:textColor="@android:color/background_light" />

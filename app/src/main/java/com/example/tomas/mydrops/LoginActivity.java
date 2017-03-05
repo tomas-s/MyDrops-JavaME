@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
@@ -25,6 +26,8 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
 
     ProgressDialog progressDialog;
+    String sensors=null;
+    Intent toMenuActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +63,29 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onCompleted(Exception e, JsonObject result) {
                             if (result != null) {
-                                Intent toMenuActivity = new Intent(LoginActivity.this, MenuActivity.class);
+                                 toMenuActivity = new Intent(LoginActivity.this, ShowDrops.class);
+
 
                                 String id = result.get("id").toString();
                                 String email = result.get("email").toString();
-                                String confirmed = result.get("confirmed").toString();
+                                int confirmed = result.get("confirmed").getAsInt();
                                 toMenuActivity.putExtra("id", id);
                                 toMenuActivity.putExtra("email", email);
-                                if(confirmed=="1"){
-                                startActivity(toMenuActivity);
+                                String url = "http://85.93.125.205:8126/api/users/"+id+"/sensors";
+                                if(confirmed ==1){
+
+                                    Ion.with(getApplicationContext())
+                                            .load(url)
+                                            .asString()
+                                            .setCallback(new FutureCallback<String>() {
+                                                @Override
+                                                public void onCompleted(Exception e, String result) {
+                                                    sensors = result;
+                                                     toMenuActivity.putExtra("sensors", sensors);
+                                                     startActivity(toMenuActivity);
+                                                }
+                                            });
+
                                 }
                                 else {
                                     Toast.makeText(LoginActivity.this, "Confirm you email", Toast.LENGTH_SHORT).show();

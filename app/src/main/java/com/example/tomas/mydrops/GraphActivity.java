@@ -3,6 +3,7 @@ package com.example.tomas.mydrops;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.echo.holographlibrary.Line;
 import com.echo.holographlibrary.LineGraph;
@@ -23,6 +24,8 @@ public class GraphActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+        String sensor_id = getIntent().getStringExtra("sensor_id");
+        Toast.makeText(GraphActivity.this, sensor_id, Toast.LENGTH_SHORT).show();
 
         drawGraph();
     }
