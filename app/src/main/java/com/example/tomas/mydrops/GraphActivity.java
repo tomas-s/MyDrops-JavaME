@@ -1,8 +1,16 @@
 package com.example.tomas.mydrops;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.echo.holographlibrary.Line;
@@ -29,7 +37,7 @@ public class GraphActivity extends AppCompatActivity {
         super.postponeEnterTransition();
     }
 
-    //TODO: Prezentacia parsovanie a pridavania grafov
+    //TODO: Prezentacia parsovanie a pridavania grafovpádompádompádom
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +46,46 @@ public class GraphActivity extends AppCompatActivity {
         Toast.makeText(GraphActivity.this, sensor_id, Toast.LENGTH_SHORT).show();
         getData(sensor_id);
 
+        Button button = (Button) findViewById(R.id.button6);
+
+        // add button listener
+        button.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                // custom dialog
+                final Dialog dialog = new Dialog(GraphActivity.this,R.style.FullHeightDialog);
+                dialog.setContentView(R.layout.dialog);
+                //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+                // set the custom dialog components - text, image and button
+                //TextView text = (TextView) dialog.findViewById(R.id.text);
+                //text.setText("Android custom dialog example!");
+                //ImageView image = (ImageView) dialog.findViewById(R.id.image);
+                //image.setImageResource(R.drawable.logo);
+/*s
+                Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+                // if button is clicked, close the custom dialog
+                dialogButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });*/
+
+                dialog.show();
+            }
+        });
+
+
+
     }
 
     private void drawGraph(Integer[] pole,LineGraph lg,int range){
         Line l = new Line();
+       // if (range==2){
+        l.setColor(Color.GREEN);//}
         LinePoint p = new LinePoint();
         if(pole.length<2){
             addPoint(l, p, 0, pole[0]);
@@ -60,8 +104,11 @@ public class GraphActivity extends AppCompatActivity {
 
         LineGraph li = lg;
         li.addLine(l);
+        li.setUsingDips(true); // pridal som
         li.setRangeY(0, range);
         li.setLineToFill(0);
+        li.setBackgroundColor(Color.GRAY); // pridal som
+        //li.setfil
     }
     private void addPoint(Line l,LinePoint p,int x,int y){
         p = new LinePoint();
@@ -103,10 +150,21 @@ public class GraphActivity extends AppCompatActivity {
                     }
 
                 });
-
-
-
-
-
     }
+/*
+    public void showDialog(){
+        AlertDialog alertDialog = new AlertDialog.Builder(GraphActivity.this).create();
+        alertDialog.setTitle("Alert");
+        alertDialog.setMessage("Alert message to be shown");
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
+    */
+
+
 }

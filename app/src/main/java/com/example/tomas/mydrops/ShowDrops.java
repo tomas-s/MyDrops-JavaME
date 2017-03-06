@@ -2,6 +2,7 @@ package com.example.tomas.mydrops;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -36,6 +37,13 @@ public class ShowDrops extends AppCompatActivity {
         } catch (JSONException e) {
             Toast.makeText(ShowDrops.this, "Chyba pri parsovani", Toast.LENGTH_SHORT).show();
         }
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton4);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ShowDrops.this,"Vytvaram zariadenie",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //GridView
 
@@ -61,6 +69,8 @@ public class ShowDrops extends AppCompatActivity {
             }
         });
     }
+
+
 
 
     private JSONArray sensorParse(String sensros){
