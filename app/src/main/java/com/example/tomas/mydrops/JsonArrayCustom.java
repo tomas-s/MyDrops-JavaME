@@ -1,10 +1,19 @@
 package com.example.tomas.mydrops;
 
+import android.content.Context;
 import android.widget.Toast;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by tomas on 3/5/17.
@@ -17,6 +26,8 @@ public class JsonArrayCustom {
     String sensrosString;
     JSONArray sensorArray;
 
+
+    public JsonArrayCustom(){}
 
     public JsonArrayCustom(String sensros) {
         this.sensrosString = sensros;
@@ -94,6 +105,47 @@ public class JsonArrayCustom {
     public String getSensorID(int i) throws JSONException {
         JSONObject jsonObject = sensorArray.getJSONObject(i);
         return jsonObject.getString("sensor_id");
+    }
+
+
+    public Integer[] getBattery() throws JSONException {
+            List<Integer> list = new ArrayList<Integer>();
+
+            for( int i = 0 ; i < sensorArray.length() ; i++ ) {
+                JSONObject jsonobject = null;
+                jsonobject = sensorArray.getJSONObject(i);
+                list.add( Integer.parseInt(jsonobject.getString("battery")) );
+            }
+
+            // convert it to array
+            Integer [] array = list.toArray( new Integer[ list.size() ] );
+        return array;
+
+
+/*
+//original
+            Integer[] battery;
+
+        for (int i = 0; i < sensorArray.length(); i++) {
+            JSONObject jsonobject = null;
+             jsonobject = sensorArray.getJSONObject(i);
+                 battery[i] = Integer.parseInt(jsonobject.getString("battery"));
+        }
+        return battery;*/
+    }
+
+    public Integer[] getState() throws JSONException {
+        List<Integer> list = new ArrayList<Integer>();
+
+        for( int i = 0 ; i < sensorArray.length() ; i++ ) {
+            JSONObject jsonobject = null;
+            jsonobject = sensorArray.getJSONObject(i);
+            list.add( Integer.parseInt(jsonobject.getString("state")) );
+        }
+
+        // convert it to array
+        Integer [] array = list.toArray( new Integer[ list.size() ] );
+        return array;
     }
 
 
