@@ -26,22 +26,39 @@ public class JsonArrayCustom {
     String sensrosString;
     JSONArray sensorArray;
 
+    public ArrayList<JSONObject> getArrayList() {
+        return arrayList;
+    }
+
+    ArrayList<JSONObject> arrayList;
+
 
     public JsonArrayCustom(){}
 
-    public JsonArrayCustom(String sensros) {
+    public JsonArrayCustom(String sensros) throws JSONException {
         this.sensrosString = sensros;
         try {
             sensorArray = new JSONArray(sensros);
         } catch (JSONException e) {
             e.getMessage();
         }
+        arrayList= new ArrayList<JSONObject>();
+
+        for (int i = 0; i < sensorArray.length(); i++) {
+            //JSONObject jsonobject = new JSONObject();
+             sensorArray.getJSONObject(i);
+            if(sensorArray.getJSONObject(i).getString("state")!=null){
+                if(Integer.parseInt(sensorArray.getJSONObject(i).getString("battery"))!=0){
+                     arrayList.add(sensorArray.getJSONObject(i));
+                }
+                }
+            }
 
     }
 
 
     public int getSensorCount(){
-        return  sensorArray.length();
+        return  arrayList.size();
     }
 
     //TODO:Ostretit ak sa poslu nevalidne data bez state a battery
@@ -52,7 +69,7 @@ public class JsonArrayCustom {
         int battery;
 
             for (int i = 0; i < sensorArray.length(); i++) {
-                JSONObject jsonobject = null;
+                JSONObject jsonobject = new JSONObject();
 
 
                     jsonobject = sensorArray.getJSONObject(i);

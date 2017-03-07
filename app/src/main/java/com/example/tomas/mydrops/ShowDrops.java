@@ -31,7 +31,13 @@ public class ShowDrops extends AppCompatActivity {
 
 
         final String sensors = getIntent().getStringExtra("sensors");
-        JsonArrayCustom jsonArrayCustom = new JsonArrayCustom(sensors);
+        JsonArrayCustom jsonArrayCustom = null;
+        try {
+            jsonArrayCustom = new JsonArrayCustom(sensors);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(ShowDrops.this,"Chyba pri vytvarani JsonArray",Toast.LENGTH_SHORT).show();
+        }
         try {
              pole = jsonArrayCustom.sensorParse();
         } catch (JSONException e) {

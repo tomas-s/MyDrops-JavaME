@@ -129,7 +129,13 @@ public class GraphActivity extends AppCompatActivity {
                 .setCallback(new FutureCallback<String>() {
                     @Override
                     public void onCompleted(Exception e, String result) {
-                        JsonArrayCustom jsonArrayCustom = new JsonArrayCustom(result);
+                        JsonArrayCustom jsonArrayCustom = null;
+                        try {
+                            jsonArrayCustom = new JsonArrayCustom(result);
+                        } catch (JSONException e1) {
+                            e1.printStackTrace();
+                            Toast.makeText(GraphActivity.this, "Chyba pri vytvarani Json array custom", Toast.LENGTH_SHORT).show();
+                        }
                         try {
                             battery = jsonArrayCustom.getBattery();
 
