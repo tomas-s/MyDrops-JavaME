@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">My Drops</string>
     <string name="input_email">Enter email</string>
-    <string name="input_password">Passwird</string>
+    <string name="input_password">Password</string>
     <string name="btn_login">Login</string>
     <string name="link_signup">My Drops</string>
     <string name="activity_menu">druha aktivita</string>
     <string name="button_konfiguruj">Konfiguruj ESP</string>
+    <string name="EspAdress">"http://85.93.125.205:8126"</string>
     <string name="title_activity_connect_to_esp">ConnectToESP</string>
     <string name="textInsertData">Set sending time:</string>
     <string name="buttonOk">Send sending time</string>
@@ -17,7 +18,7 @@
         <item>12 hours</item>
         <item>1 day</item>
         <item>3 days</item>
-        <item>1 week</item>
+        <item>1 week (recommended)</item>
         <item>2 weeks</item>
     </string-array>
 

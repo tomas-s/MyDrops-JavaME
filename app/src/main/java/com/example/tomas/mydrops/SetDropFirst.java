@@ -1,6 +1,7 @@
 package com.example.tomas.mydrops;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -8,32 +9,57 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import java.util.Iterator;
 import java.util.List;
 
-public class connectToESP extends AppCompatActivity {
+public class SetDropFirst extends AppCompatActivity {
+    private  static WifiConfiguration oldConfiguration=null;
+    public static WifiConfiguration getOldConfiguration() {
+        return oldConfiguration;
+    }
 
-    private Spinner spinner;
-    WifiConfiguration oldConfiguration=null;
+    public String getSensor_id() {
+        return sensor_id;
+    }
 
+    public void setSensor_id(String sensor_id) {
+        this.sensor_id = sensor_id;
+    }
+
+    String sensor_id;
+
+    String sensors;
+    String email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connect_to_esp);
-        addItems();
-        connect();
+        setContentView(R.layout.activity_set_drop_first);
+         email = getIntent().getStringExtra("email");
+         sensors = getIntent().getStringExtra("sensors");
+/*
+        //pridanie do SetDropSecond
+        JsonObject json = new JsonObject();
+        json.addProperty("email", email);
+
+        //Generovanie senzor ID funguje, zakomentoval som aby sa nevytvorilo milion senzorov
+        Ion.with(getApplicationContext())
+                .load("http://85.93.125.205:8126/api/generateSN")
+                .setJsonObjectBody(json)
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        setSensor_id(result.get("sensor_id").getAsString());
+                    }
+                });
+                */
+        connect(getApplicationContext());
     }
 
     @Override
@@ -42,85 +68,23 @@ public class connectToESP extends AppCompatActivity {
         connectToOldWifi();
     }
 
- /*
-    *convert and test convertion to INT
-    * create connect to ESP and send data
-    */
-
-    public void setSendingTime(View view){
-        spinner = (Spinner) findViewById(R.id.spinnerSendingTime);
-        String pom = String.valueOf(spinner.getSelectedItem());
-        int i = getResult(pom);
-        Toast.makeText(connectToESP.this, "Je "+i+" integer: " ,
-                Toast.LENGTH_SHORT).show();
-        //connectToOldWifi(view);
+    public void toNextActivity(View view){
+        sensor_id = "$2y$10$2SdhktPrmZTRpJC0EzCpJ./PnXoX.K3ZOf8sHPOhUIG8fi.23S7TK";
+        Intent toSetDropSecond = new Intent(SetDropFirst.this, SetDropSecond.class);
+        toSetDropSecond.putExtra("sensor_id", getSensor_id());
+        toSetDropSecond.putExtra("sensors", sensors);
+        toSetDropSecond.putExtra("email", email);
+        toSetDropSecond.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(toSetDropSecond);
     }
 
 
 
 
 
-
-
-
-
-
-
-    public void addItems() {
-        spinner = (Spinner) findViewById(R.id.spinnerSendingTime);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.spinnerSendingTime, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-    }
-
-   private int getResult(String s){
-       int result=0;
-       switch (s){
-           case "1 hour":
-               result=1;
-               break;
-           case "3 hours":
-               result=2;
-               break;
-           case "6 hours":
-               result=3;
-               break;
-           case "12 hours":
-               result=4;
-               break;
-           case "1 day":
-               result=5;
-               break;
-           case "3 days":
-               result=6;
-               break;
-           case "1 week":
-               result=7;
-               break;
-           case "2 weeks":
-               result=8;
-               break;
-
-       default:
-       throw new IllegalArgumentException("Invalid argument of spinner:  "+s);
-       }
-       return result;
-   }
-
-
-
-
-
-
-
-
-
-
-
-//TODO: zistit ci neni aktivna wifi ESP ak nie je az potom volat novu metodu
+    //TODO: zistit ci neni aktivna wifi ESP ak nie je az potom volat novu metodu
     //TODO:
-    public void connect()
+    public void connect(Context context)
     {
 
 
@@ -146,7 +110,7 @@ public class connectToESP extends AppCompatActivity {
 
         wfc.preSharedKey = "\"".concat(password).concat("\"");
 
-        WifiManager wfMgr = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        WifiManager wfMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
         int networkId = wfMgr.addNetwork(wfc);
 
@@ -178,7 +142,7 @@ public class connectToESP extends AppCompatActivity {
             // leNetwork(networkId, true) to connect
         }
         if(wfMgr.enableNetwork(networkId,true)){
-            Toast.makeText(getApplicationContext(),"Aktivnova nova wifi",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,"Aktivnova nova wifi",Toast.LENGTH_LONG).show();
             Log.i("Aktivovana new wifi",Integer.toString(networkId));
         }
 
@@ -220,51 +184,21 @@ public class connectToESP extends AppCompatActivity {
         wifiManager.reconnect();
         wifiManager.saveConfiguration();*/
     }
-
+    
     public void connectToOldWifi(){
         WifiManager wfMgr = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
 
         wfMgr.disconnect();     //disconect from current network
-        int networkId = wfMgr.addNetwork(oldConfiguration);
+        int networkId = wfMgr.addNetwork(SetDropFirst.getOldConfiguration());
         if (networkId != -1) {
             // success, can call wfMgr.enableNetwork(networkId, true) to connect
         }
         if(wfMgr.enableNetwork(networkId,true)){
-            Toast.makeText(getApplicationContext(),"Aktivnova stara wifi",Toast.LENGTH_LONG).show();
+            //Toast.makeText(contex,"Aktivnova stara wifi",Toast.LENGTH_LONG).show();
             Log.i("Aktivovana old wifi",Integer.toString(networkId));
         }
-
-
     }
 
-
-    public void callRest(View view){
-       // final TextView mTextView = (TextView) findViewById(R.id.textStatus);
-
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://192.168.4.1/interval/2";
-        //  String url ="http://www.google.com";
-
-// Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        String r = response;
-                        Log.d("Response:",response);
-                        // Display the first 500 characters of the response string.
-                        //mTextView.setText("Response is: "+ response.substring(0,500));
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-              //  mTextView.setText("That didn't work!");
-            }
-        });
-// Add the request to the RequestQueue.
-        queue.add(stringRequest);
-    }
 
 }

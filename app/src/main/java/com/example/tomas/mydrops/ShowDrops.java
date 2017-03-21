@@ -24,12 +24,18 @@ public class ShowDrops extends AppCompatActivity {
 
 
 
+
+   //
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_drops);
 
 
+        final String email = getIntent().getStringExtra("email");
         final String sensors = getIntent().getStringExtra("sensors");
         JsonArrayCustom jsonArrayCustom = null;
         try {
@@ -47,7 +53,12 @@ public class ShowDrops extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ShowDrops.this,"Vytvaram zariadenie",Toast.LENGTH_SHORT).show();
+
+                Intent toSetDropFirst = new Intent(ShowDrops.this, SetDropFirst.class);
+                toSetDropFirst.putExtra("sensors", sensors);
+                toSetDropFirst.putExtra("email", email);
+                startActivity(toSetDropFirst);
+
             }
         });
 

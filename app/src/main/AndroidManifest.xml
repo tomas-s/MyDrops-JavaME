@@ -28,7 +28,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".MenuActivity" />
         <activity
-            android:name=".connectToESP"
+            android:name=".ConnectToESP"
             android:label="@string/title_activity_connect_to_esp"
             android:theme="@style/AppTheme" />
         <activity android:name=".GraphActivity" />
@@ -36,7 +36,10 @@
             android:name=".ShowDevices"
             android:label="@string/title_activity_show_devices"
             android:theme="@style/AppTheme" />
-        <activity android:name=".ShowDrops"></activity>
+        <activity android:name=".ShowDrops" />
+        <activity android:name=".SetDropFirst"/>
+        <activity android:name=".SetDropSecond"/>
+        <activity android:name=".SetDropThird"></activity>
     </application>
 
 </manifest>

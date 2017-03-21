@@ -49,6 +49,7 @@
             android:layout_height = "wrap_content"
             android:id = "@+id/login"
             android:hint = "Enter Name"
+            android:inputType="textEmailAddress"
             android:focusable = "true"
             android:textColorHighlight = "#ff7eff15"
             android:textColorHint = "@android:color/background_light"

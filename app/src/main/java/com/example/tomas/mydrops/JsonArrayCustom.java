@@ -35,7 +35,7 @@ public class JsonArrayCustom {
 
     public JsonArrayCustom(){}
 
-    public JsonArrayCustom(String sensros) throws JSONException {
+    public  JsonArrayCustom(String sensros) throws JSONException {
         this.sensrosString = sensros;
         try {
             sensorArray = new JSONArray(sensros);
@@ -54,6 +54,7 @@ public class JsonArrayCustom {
                 }
             }
 
+
     }
 
 
@@ -67,12 +68,12 @@ public class JsonArrayCustom {
         
         String state;
         int battery;
-
-            for (int i = 0; i < sensorArray.length(); i++) {
+//tu som skoncil ma tu byt arraylist a nie sensor array
+            for (int i = 0; i < arrayList.size(); i++) {
                 JSONObject jsonobject = new JSONObject();
 
 
-                    jsonobject = sensorArray.getJSONObject(i);
+                    jsonobject = arrayList.get(i);
 
 
                      state = jsonobject.getString("state");
@@ -120,7 +121,7 @@ public class JsonArrayCustom {
 
 
     public String getSensorID(int i) throws JSONException {
-        JSONObject jsonObject = sensorArray.getJSONObject(i);
+        JSONObject jsonObject = arrayList.get(i);
         return jsonObject.getString("sensor_id");
     }
 
@@ -128,9 +129,9 @@ public class JsonArrayCustom {
     public Integer[] getBattery() throws JSONException {
             List<Integer> list = new ArrayList<Integer>();
 
-            for( int i = 0 ; i < sensorArray.length() ; i++ ) {
+            for( int i = 0 ; i < arrayList.size() ; i++ ) {
                 JSONObject jsonobject = null;
-                jsonobject = sensorArray.getJSONObject(i);
+                jsonobject = arrayList.get(i);
                 list.add( Integer.parseInt(jsonobject.getString("battery")) );
             }
 
@@ -154,9 +155,9 @@ public class JsonArrayCustom {
     public Integer[] getState() throws JSONException {
         List<Integer> list = new ArrayList<Integer>();
 
-        for( int i = 0 ; i < sensorArray.length() ; i++ ) {
+        for( int i = 0 ; i < arrayList.size() ; i++ ) {
             JSONObject jsonobject = null;
-            jsonobject = sensorArray.getJSONObject(i);
+            jsonobject = arrayList.get(i);
             list.add( Integer.parseInt(jsonobject.getString("state")) );
         }
 

@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                                 String id = result.get("id").toString();
-                                String email = result.get("email").toString();
+                                String email = result.get("email").getAsString();
                                 int confirmed = result.get("confirmed").getAsInt();
                                 toMenuActivity.putExtra("id", id);
                                 toMenuActivity.putExtra("email", email);
@@ -82,7 +82,9 @@ public class LoginActivity extends AppCompatActivity {
                                                 public void onCompleted(Exception e, String result) {
                                                     sensors = result;
                                                      toMenuActivity.putExtra("sensors", sensors);
+                                                    toMenuActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                      startActivity(toMenuActivity);
+                                                    finish();
                                                 }
                                             });
 
@@ -111,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
         EditText ePassword =(EditText) findViewById(R.id.passwprd);
 
         if (email.isEmpty() ) {
-            Toast.makeText(LoginActivity.this, "Email is not valid", Toast.LENGTH_SHORT).show();
+            eLogin.setError("Email is not valid");
             valid = false;
             return valid;
         } else {
@@ -119,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         if (ePassword.length() < 4 || ePassword.length() > 10) {
-            Toast.makeText(LoginActivity.this, "Password is not valid", Toast.LENGTH_SHORT).show();
+            ePassword.setError("Password is not valid");
             valid = false;
             return valid;
         } else {
