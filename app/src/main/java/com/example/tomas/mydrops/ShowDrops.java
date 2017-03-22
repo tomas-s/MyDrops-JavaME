@@ -57,6 +57,8 @@ public class ShowDrops extends AppCompatActivity {
                 Intent toSetDropFirst = new Intent(ShowDrops.this, SetDropFirst.class);
                 toSetDropFirst.putExtra("sensors", sensors);
                 toSetDropFirst.putExtra("email", email);
+                toSetDropFirst.putExtra("new", "true");
+                toSetDropFirst.putExtra("sensor_id", "-1");
                 startActivity(toSetDropFirst);
 
             }
@@ -80,6 +82,8 @@ public class ShowDrops extends AppCompatActivity {
 
                 Intent toGraphActivity = new Intent(ShowDrops.this, GraphActivity.class);
                 toGraphActivity.putExtra("sensor_id", sensorID);
+                toGraphActivity.putExtra("sensors", sensors);
+                toGraphActivity.putExtra("new", "true");
                 startActivity(toGraphActivity);
 
                 //Toast.makeText(ShowDrops.this,"" + sensoorID,Toast.LENGTH_SHORT).show();

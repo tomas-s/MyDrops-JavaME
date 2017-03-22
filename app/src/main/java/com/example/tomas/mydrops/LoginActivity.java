@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }
 
                             } else {
-                                Toast.makeText(LoginActivity.this, "Bad email or password", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Check your Internet connection", Toast.LENGTH_SHORT).show();
                             }
                             progressDialog.dismiss();
                             btnLogin.setEnabled(true);

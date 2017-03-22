@@ -32,21 +32,24 @@ public class SetDropFirst extends AppCompatActivity {
         this.sensor_id = sensor_id;
     }
 
-    String sensor_id;
 
     String sensors;
     String email;
+    String newDevice;
+    String sensor_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_drop_first);
          email = getIntent().getStringExtra("email");
          sensors = getIntent().getStringExtra("sensors");
-/*
-        //pridanie do SetDropSecond
-        JsonObject json = new JsonObject();
-        json.addProperty("email", email);
+        newDevice = getIntent().getStringExtra("new");
+        sensor_id= getIntent().getStringExtra("sensor_id");
 
+
+
+        if(newDevice=="true") {
+/*
         //Generovanie senzor ID funguje, zakomentoval som aby sa nevytvorilo milion senzorov
         Ion.with(getApplicationContext())
                 .load("http://85.93.125.205:8126/api/generateSN")
@@ -58,8 +61,26 @@ public class SetDropFirst extends AppCompatActivity {
                         setSensor_id(result.get("sensor_id").getAsString());
                     }
                 });
+
                 */
-        connect(getApplicationContext());
+        }
+        else {
+            JsonObject json = new JsonObject();
+            json.addProperty("DeviceID", sensor_id);
+            json.addProperty("Setup", 1);
+
+            Ion.with(getApplicationContext())
+                    .load("http://85.93.125.205:8126/api/setsetup")
+                    .setJsonObjectBody(json)
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            // do stuff with the result or error
+                        }
+                    });
+
+        }
     }
 
     @Override
@@ -70,6 +91,14 @@ public class SetDropFirst extends AppCompatActivity {
 
     public void toNextActivity(View view){
         sensor_id = "$2y$10$2SdhktPrmZTRpJC0EzCpJ./PnXoX.K3ZOf8sHPOhUIG8fi.23S7TK";
+        String SSID;
+        if (newDevice.equals("true")){
+            SSID="ESP";
+        }
+        else {
+            SSID = "ESP"+sensor_id.substring(sensor_id.length()-6);
+        }
+        connect(getApplicationContext(),SSID,"123123123");
         Intent toSetDropSecond = new Intent(SetDropFirst.this, SetDropSecond.class);
         toSetDropSecond.putExtra("sensor_id", getSensor_id());
         toSetDropSecond.putExtra("sensors", sensors);
@@ -84,13 +113,8 @@ public class SetDropFirst extends AppCompatActivity {
 
     //TODO: zistit ci neni aktivna wifi ESP ak nie je az potom volat novu metodu
     //TODO:
-    public void connect(Context context)
+    public void connect(Context context,String ssid,String password)
     {
-
-
-
-        String ssid= "ESP";
-        String password="123123123";
         WifiConfiguration wfc = new WifiConfiguration();
 
         wfc.SSID = "\"".concat(ssid).concat("\"");

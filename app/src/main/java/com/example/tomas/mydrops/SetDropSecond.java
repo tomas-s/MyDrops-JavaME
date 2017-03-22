@@ -1,7 +1,10 @@
 package com.example.tomas.mydrops;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -31,7 +34,9 @@ public class SetDropSecond extends AppCompatActivity {
     String sensors;
     String email;
     Spinner spinner;
+    String sensor_id;
     boolean isSuccessResponse=false;
+    ProgressDialog progressDialog;
 
 
 
@@ -45,9 +50,10 @@ public class SetDropSecond extends AppCompatActivity {
         //spinner.setSelection(7);
         setContentView(R.layout.activity_set_drop_second);
         addItems();
-        final String sensor_id = getIntent().getStringExtra("sensor_id");
+        sensor_id = getIntent().getStringExtra("sensor_id");
         email = getIntent().getStringExtra("email");
         sensors = getIntent().getStringExtra("sensors");
+
         //if sensor_id.equals("");
         Toast.makeText(SetDropSecond.this, sensor_id, Toast.LENGTH_SHORT).show();
     }
@@ -66,17 +72,17 @@ public class SetDropSecond extends AppCompatActivity {
 
     public boolean validate() {
         boolean valid = true;
-        EditText eSSID =(EditText) findViewById(R.id.e_SSID);
+        EditText etSSID =(EditText) findViewById(R.id.e_SSID);
         EditText ePassword =(EditText) findViewById(R.id.editTextPassword);
         EditText eDevicePassword =(EditText) findViewById(R.id.editTextDevicePassword);
 
 
-        if (eSSID.length() < 2 || ePassword.length() > 14) {
+        if (etSSID.length() < 2 || ePassword.length() > 14) {
             valid = false;
-            eSSID.setError("SSID is not valid");
+            etSSID.setError("SSID is not valid");
             return valid;
         } else {
-            ePassword.setError(null);
+            etSSID.setError(null);
         }
 
         if (ePassword.length() < 6 || ePassword.length() > 25) {
@@ -96,20 +102,6 @@ public class SetDropSecond extends AppCompatActivity {
 
         return valid;
     }
-
-    public void toSetDropThird(View view){
-        if(validate()&&isSuccessResponse) {
-            connectToOldWifi();
-            Intent toSetDropThird = new Intent(SetDropSecond.this, SetDropThird.class);
-            toSetDropThird.putExtra("sensors", sensors);
-            toSetDropThird.putExtra("email", email);
-            //toSetDropThird.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(toSetDropThird);
-        }
-    }
-
-
-
 
 
 
@@ -152,25 +144,64 @@ public class SetDropSecond extends AppCompatActivity {
     }
 
 
+    public void toSetDropThird(View view){
+            connectToOldWifi();
+            Intent toSetDropThird = new Intent(SetDropSecond.this, SetDropThird.class);
+            toSetDropThird.putExtra("sensors", sensors);
+            toSetDropThird.putExtra("email", email);
+        toSetDropThird.putExtra("sensor_id", sensor_id);
+            //toSetDropThird.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(toSetDropThird);
+
+
+
+
+    }
+
     public void sendJsonToESP(View view){
-        JsonObject json = new JsonObject();
+        WifiManager wfMgr = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        String ssid = wfMgr.getConnectionInfo().getSSID().substring(1,4);
+        ConnectivityManager connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-        json.addProperty("SN", "$2y$10$2SdhktPrmZTRpJC0EzCpJ./PnXoX.K3ZOf8sHPOhUIG8fi.23S7TK");
-        json.addProperty("ssidWifi", getSSID());
-        json.addProperty("passwordWifi", getPass());
-        json.addProperty("passwordAP", getDevicePassword());
-        //json.addProperty("interval", getInterval());
+        String example="ESP";
+        if(mWifi.isConnected() && ssid.equals(example)){
+        if(validate()) {
+            JsonObject json = new JsonObject();
 
-        Ion.with(getApplicationContext())
-                .load("http://192.168.4.1/")
-                .setJsonObjectBody(json)
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        isSuccessResponse = true;
-                    }
-                });
+            json.addProperty("SN", "$2y$10$2SdhktPrmZTRpJC0EzCpJ./PnXoX.K3ZOf8sHPOhUIG8fi.23S7TK");
+            json.addProperty("ssidWifi", getSSID());
+            json.addProperty("passwordWifi", getPass());
+            //json.addProperty("passwordAP", getDevicePassword());
+            //json.addProperty("interval", getInterval());
+
+            //progressDialog = new ProgressDialog(SetDropSecond.this);
+            progressDialog = ProgressDialog.show(this, "dialog title",
+                    "dialog message", true);
+            //progressDialog.setMessage("Sending data...");
+            progressDialog.show();
+            Ion.with(getApplicationContext())
+                    .load("http://192.168.4.1/")
+                    .setJsonObjectBody(json)
+                    .asJsonObject()
+                    .setCallback(new FutureCallback<JsonObject>() {
+                        @Override
+                        public void onCompleted(Exception e, JsonObject result) {
+                            if (e == null) {
+                                if (e != null) {
+                                    Toast.makeText(getApplicationContext(), "Error ", Toast.LENGTH_LONG).show();
+                                    return;
+                                }
+
+                            }
+                        }
+                    });
+            progressDialog.dismiss();
+        }
+    }
+        else {
+            Toast.makeText(SetDropSecond.this, "Connect to your Drop wifi", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
