@@ -5,27 +5,32 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class ShowDrops extends AppCompatActivity {
     String sensors;
     String s;
     String [] pole;
+    ArrayList<JSONObject> finalList;
 
 
 
 
-   //
+   //TODO: upravit mriezku pri Grid liste
 
 
 
@@ -45,7 +50,9 @@ public class ShowDrops extends AppCompatActivity {
             Toast.makeText(ShowDrops.this,"Chyba pri vytvarani JsonArray",Toast.LENGTH_SHORT).show();
         }
         try {
-             pole = jsonArrayCustom.sensorParse();
+            pole = jsonArrayCustom.sensorParse();
+            finalList = jsonArrayCustom.getArrayList();
+
         } catch (JSONException e) {
             Toast.makeText(ShowDrops.this, "Chyba pri parsovani", Toast.LENGTH_SHORT).show();
         }
@@ -67,7 +74,7 @@ public class ShowDrops extends AppCompatActivity {
         //GridView
 
         GridView gridview = (GridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new ImageAdapter(this,pole));
+        gridview.setAdapter(new ImageAdapter(this,pole,finalList));       //tu pridat pole s nazvom zariadenia , batery statusom, battery icony a stavom
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -83,7 +90,8 @@ public class ShowDrops extends AppCompatActivity {
                 Intent toGraphActivity = new Intent(ShowDrops.this, GraphActivity.class);
                 toGraphActivity.putExtra("sensor_id", sensorID);
                 toGraphActivity.putExtra("sensors", sensors);
-                toGraphActivity.putExtra("new", "true");
+                toGraphActivity.putExtra("new", "false");
+                toGraphActivity.putExtra("email", email);
                 startActivity(toGraphActivity);
 
                 //Toast.makeText(ShowDrops.this,"" + sensoorID,Toast.LENGTH_SHORT).show();
@@ -118,12 +126,17 @@ public class ShowDrops extends AppCompatActivity {
     public class ImageAdapter extends BaseAdapter {
         private Context mContext;
         private Integer[] mThumbIds;
+        ArrayList<JSONObject> finalList;
+        String state;
+        String name;
+        int battery;
 
 
 
-        public ImageAdapter(Context c,String[] pole) {
+        public ImageAdapter(Context c, String[] pole, ArrayList<JSONObject> finalList) {
             mThumbIds = new Integer[pole.length];
             mContext = c;
+            this.finalList = finalList;
             int i;
             for(i=0;i<pole.length;i++){
                 int resID = getResources().getIdentifier(pole[i], "drawable", getPackageName());
@@ -141,7 +154,7 @@ public class ShowDrops extends AppCompatActivity {
         }
 
         public int getCount() {
-            return mThumbIds.length;
+            return finalList.size();
         }
 
         public Object getItem(int position) {
@@ -153,6 +166,7 @@ public class ShowDrops extends AppCompatActivity {
         }
 
         // create a new ImageView for each item referenced by the Adapter
+        /*
         public View getView(int position, View convertView, ViewGroup parent) {
            // setmThumbIds(pole);
             ImageView imageView;
@@ -168,14 +182,80 @@ public class ShowDrops extends AppCompatActivity {
 
             imageView.setImageResource(mThumbIds[position]);
             return imageView;
+        }*/
+
+
+
+
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View gridView;
+
+            LayoutInflater inflater = (LayoutInflater) mContext
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if(convertView==null)
+            {
+                gridView = new View(mContext);
+                gridView = inflater.inflate( R.layout.gridview_row , null);
+
+
+                 ImageView imageViewStatus = (ImageView) gridView.findViewById(R.id.imageViewStatus);
+                 ImageView imageViewBattery=(ImageView) gridView.findViewById(R.id.imageViewBattery);
+                 TextView textViewEspName = (TextView) gridView.findViewById(R.id.textViewEspName);
+                 TextView textViewBatteryPercentage = (TextView) gridView.findViewById(R.id.textViewBatteryPercentage);
+
+                JSONObject jsonobject;
+                jsonobject = finalList.get(position);
+                try {
+                    state = jsonobject.getString("state");
+                    battery = Integer.parseInt(jsonobject.getString("battery"));
+                    name = jsonobject.getString("name");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(ShowDrops.this,"Chyba pri parsovani array listu v triede show drops - metoda getView",Toast.LENGTH_SHORT).show();
+                }
+
+                textViewEspName.setText(name);
+                if (state.equals("0")){
+                    imageViewStatus.setImageResource(R.drawable.sm_icon_red);
+                }
+                else {
+                    imageViewStatus.setImageResource(R.drawable.sm_icon_green);
+                }
+
+                if (battery<20){
+                    textViewBatteryPercentage.setText(Integer.toString(battery));
+                    imageViewBattery.setImageResource(R.drawable.battery_0_bars);
+                }if (battery>20&&battery<40){
+                textViewBatteryPercentage.setText(Integer.toString(battery));
+                imageViewBattery.setImageResource(R.drawable.battery_1_bar);
+            }
+                if (battery>40&&battery<60){
+                    textViewBatteryPercentage.setText(Integer.toString(battery));
+                    imageViewBattery.setImageResource(R.drawable.battery_2_bars);
+                }
+                if (battery>60&&battery<80){
+                    textViewBatteryPercentage.setText(Integer.toString(battery));
+                    imageViewBattery.setImageResource(R.drawable.battery_3_bars);
+                }
+                if (battery>80) {
+                    textViewBatteryPercentage.setText(Integer.toString(battery));
+                    imageViewBattery.setImageResource(R.drawable.battery_4_bars);
+                }
+
+
+
+
+
+            }
+            else
+            {
+                gridView = (View) convertView;
+            }
+
+
+            return gridView;
         }
-
-
-
-
-        // references to our images
-
-
 
     }
 

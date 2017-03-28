@@ -25,12 +25,12 @@ import java.util.List;
 public class JsonArrayCustom {
     String sensrosString;
     JSONArray sensorArray;
+    ArrayList<JSONObject> arrayList;
 
     public ArrayList<JSONObject> getArrayList() {
         return arrayList;
     }
 
-    ArrayList<JSONObject> arrayList;
 
 
     public JsonArrayCustom(){}
@@ -62,7 +62,6 @@ public class JsonArrayCustom {
         return  arrayList.size();
     }
 
-    //TODO:Ostretit ak sa poslu nevalidne data bez state a battery
     public String[] sensorParse() throws JSONException {
         String[] pole = new String[getSensorCount()];
         

@@ -3,8 +3,11 @@ package com.example.tomas.mydrops;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +25,13 @@ import com.koushikdutta.ion.Ion;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 //http://sourcey.com/beautiful-android-login-and-signup-screens-with-material-design/
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,7 +43,47 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        if(!(isInternetAvailable(getApplicationContext()))){
+            Toast.makeText(LoginActivity.this, "Internet access is not available", Toast.LENGTH_SHORT).show();
+        }
     }
+// bola nahradena metodov isInternetAvailable - tato metoda nie je 100% odtestovana
+    private boolean isNetworkAvailable() {
+    ConnectivityManager connectivityManager
+          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+}
+
+    public static boolean isInternetAvailable(Context context) {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+        boolean connectionavailable = false;
+        ConnectivityManager cm = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        NetworkInfo informationabtnet = cm.getActiveNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            try {
+                if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                    if (ni.isConnected()) haveConnectedWifi = true;
+                if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                    if (ni.isConnected()) haveConnectedMobile = true;
+                if (informationabtnet.isAvailable()
+                        && informationabtnet.isConnected())
+                    connectionavailable = true;
+                Log.i("ConnectionAvailable", "" + connectionavailable);
+            } catch (Exception e) {
+                System.out.println("Inside utils catch clause , exception is"
+                        + e.toString());
+                e.printStackTrace();
+            }
+        }
+        return haveConnectedWifi || haveConnectedMobile;
+    }
+
+
 
     public void authentificaion(View view){
 
@@ -49,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
             JsonObject json = new JsonObject();
             json.addProperty("email", login);
             json.addProperty("password", password);
-            btnLogin.setEnabled(false);
+            //btnLogin.setEnabled(false);
             //add progress Dialog
             progressDialog = new ProgressDialog(LoginActivity.this);
             progressDialog.setMessage("Authenticating...");
@@ -97,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "Check your Internet connection", Toast.LENGTH_SHORT).show();
                             }
                             progressDialog.dismiss();
-                            btnLogin.setEnabled(true);
+                            //btnLogin.setEnabled(true);
 
 
                         }

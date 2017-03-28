@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-
+//TODO: na klik finish nacita nove zariadenia
 public class SetDropThird extends AppCompatActivity {
     String sensors;
     String email;
@@ -41,7 +41,11 @@ public class SetDropThird extends AppCompatActivity {
     protected void onDestroy() {
         super.onStart();/*
         Intent toMenuActivity = new Intent(SetDropThird.this, ShowDrops.class);
-        toMenuActivity.putExtra("sensors", sensors);
+        toMenuActivity.putExtra("sensors", sensors); Can not connect to server!]
+Wrong sensor ID - please configurate your device
+
+Mode: 1
+
         toMenuActivity.putExtra("email", email);
         startActivity(toMenuActivity);*/
     }
@@ -70,7 +74,7 @@ public class SetDropThird extends AppCompatActivity {
         toMenuActivity.putExtra("sensors", sensors);
         toMenuActivity.putExtra("email", email);
         startActivity(toMenuActivity);
-
+        Toast.makeText(getApplicationContext(),"Now restart your Drop device",Toast.LENGTH_LONG).show();
     }
 
     public void connectToOldWifi(){
@@ -83,7 +87,6 @@ public class SetDropThird extends AppCompatActivity {
             // success, can call wfMgr.enableNetwork(networkId, true) to connect
         }
         if(wfMgr.enableNetwork(networkId,true)){
-            //Toast.makeText(contex,"Aktivnova stara wifi",Toast.LENGTH_LONG).show();
             Log.i("Aktivovana old wifi",Integer.toString(networkId));
         }
     }

@@ -11,12 +11,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.tomas.mydrops.ShowDrops">
 
+<!--
+zobrane z grid view
+android:columnWidth="90dp"
 
+-->
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:columnWidth="90dp"
+
         android:numColumns="auto_fit"
         android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"

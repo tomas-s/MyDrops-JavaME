@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_set_drop_first"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.tomas.mydrops.SetDropFirst">
+
+    <TextView
+        android:text="1st step:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/textView8"
+        android:textSize="24sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textStyle="normal|bold" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_height="50dp"
+        android:layout_gravity="left"
+        android:gravity="left|center_vertical"
+        android:paddingLeft="20dp"
+        android:drawableRight="@drawable/next"
+        android:drawablePadding="5dp"
+        android:text="Next"
+        android:layout_width="wrap_content"
+        android:background="@android:color/holo_blue_bright"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="toNextActivity"/>
+
+    <TextView
+        android:text="Drop password:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:id="@+id/textView14"
+        android:layout_below="@+id/textView8"
+        android:layout_alignLeft="@+id/textView8"
+        android:layout_alignStart="@+id/textView8"
+        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editTextDropPassword"
+        android:layout_marginTop="18dp"
+        android:layout_below="@+id/textView14"
+        android:layout_alignLeft="@+id/textView8"
+        android:layout_alignStart="@+id/textView8" />
+
+    <TextView
+        android:text="Restart your Drop and wait 4 second then connect to them"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView9"
+        android:layout_marginTop="38dp"
+        android:textSize="14sp"
+        android:layout_below="@+id/editTextDropPassword"
+        android:layout_alignLeft="@+id/editTextDropPassword"
+        android:layout_alignStart="@+id/editTextDropPassword" />
+
+</RelativeLayout>

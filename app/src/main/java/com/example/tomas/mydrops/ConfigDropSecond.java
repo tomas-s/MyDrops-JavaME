@@ -31,13 +31,17 @@ import com.koushikdutta.ion.Ion;
 import java.util.Iterator;
 import java.util.List;
 
-public class SetDropSecond extends AppCompatActivity {
+public class ConfigDropSecond extends AppCompatActivity {
     String sensors;
     String email;
     Spinner spinner;
     String sensor_id;
     boolean dataSended=false;
     ProgressDialog progressDialog;
+    CheckBox checkBoxSsidOfWiFi;
+    CheckBox checkBoxPasswordOfWiFi;
+    CheckBox checkBoxDevicePassword;
+    CheckBox checkBoxResetInterval;
 
 
 
@@ -46,14 +50,11 @@ public class SetDropSecond extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         spinner = (Spinner) findViewById(R.id.spinnerSendingTime);
         //spinner.setSelection(7);
-        setContentView(R.layout.activity_set_drop_second);
+        setContentView(R.layout.activity_config_drop_second);
         addItems();
         sensor_id = getIntent().getStringExtra("sensor_id");
         email = getIntent().getStringExtra("email");
         sensors = getIntent().getStringExtra("sensors");
-
-        //if sensor_id.equals("");
-        Toast.makeText(SetDropSecond.this, sensor_id, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -67,39 +68,52 @@ public class SetDropSecond extends AppCompatActivity {
         startActivity(toMenuActivity);*/
     }
 
-
     public boolean validate() {
         boolean valid = true;
         EditText etSSID =(EditText) findViewById(R.id.e_SSID);
         EditText ePassword =(EditText) findViewById(R.id.editTextPassword);
         EditText eDevicePassword =(EditText) findViewById(R.id.editTextDevicePassword);
+        checkBoxSsidOfWiFi = (CheckBox) findViewById(R.id.checkBoxSsidOfWiFi);
+        checkBoxPasswordOfWiFi = (CheckBox) findViewById(R.id.checkBoxPasswordOfWiFi);
+        checkBoxDevicePassword = (CheckBox) findViewById(R.id.checkBoxDevicePassword);
 
 
-        if (etSSID.length() < 2 || etSSID.length() > 35) {
-            valid = false;
-            etSSID.setError("SSID is not valid");
-            return valid;
-        } else {
-            etSSID.setError(null);
+        if(checkBoxSsidOfWiFi.isChecked()) {
+            if (etSSID.length() < 2 || etSSID.length() > 35) {
+                valid = false;
+                etSSID.setError("SSID is not valid");
+                return valid;
+            } else {
+                etSSID.setError(null);
+            }
         }
 
-        if (ePassword.length() < 6 || ePassword.length() > 30) {
-            valid = false;
-            ePassword.setError("Password is not valid");
-            return valid;
-        } else {
-            ePassword.setError(null);
-        }
-        if (eDevicePassword.length() < 6 || eDevicePassword.length() > 30) {
-            valid = false;
-            eDevicePassword.setError("Password for device is not valid");
-            return valid;
-        } else {
-            eDevicePassword.setError(null);
+
+        if(checkBoxPasswordOfWiFi.isChecked()) {
+            if (ePassword.length() < 6 || ePassword.length() > 30) {
+                valid = false;
+                ePassword.setError("Password is not valid");
+                return valid;
+            } else {
+                ePassword.setError(null);
+            }
         }
 
+
+        if(checkBoxDevicePassword.isChecked()) {
+            if (eDevicePassword.length() < 6 || eDevicePassword.length() > 30) {
+                valid = false;
+                eDevicePassword.setError("Password for device is not valid");
+                return valid;
+            } else {
+                eDevicePassword.setError(null);
+            }
+        }
         return valid;
     }
+
+
+
 
 
 
@@ -145,7 +159,7 @@ public class SetDropSecond extends AppCompatActivity {
     public void toSetDropThird(View view){
         if (dataSended) {
             connectToOldWifi();
-            Intent toSetDropThird = new Intent(SetDropSecond.this, SetDropThird.class);
+            Intent toSetDropThird = new Intent(ConfigDropSecond.this, SetDropThird.class);
             toSetDropThird.putExtra("sensors", sensors);
             toSetDropThird.putExtra("email", email);
             toSetDropThird.putExtra("sensor_id", sensor_id);
@@ -153,7 +167,7 @@ public class SetDropSecond extends AppCompatActivity {
             startActivity(toSetDropThird);
         }
         else {
-            Toast.makeText(SetDropSecond.this, "You have to send a data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ConfigDropSecond.this, "You have to send a data", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -169,36 +183,36 @@ public class SetDropSecond extends AppCompatActivity {
 
 
         if(mWifi.isConnected() && ssid.equals("ESP")){
-        if(validate()) {
-            JsonObject json = new JsonObject();
+            if(validate()) {
+                JsonObject json = new JsonObject();
 
-            json.addProperty("SN", sensor_id);
-            json.addProperty("ssidWifi", getSSID());
-            json.addProperty("passwordWifi", getPass());
-            json.addProperty("passwordAP", getDevicePassword());
-            json.addProperty("interval", getInterval());
+                json.addProperty("SN", sensor_id);
+                json.addProperty("ssidWifi", getSSID());
+                json.addProperty("passwordWifi", getPass());
+                json.addProperty("passwordAP", getDevicePassword());
+                json.addProperty("interval", getInterval());
 
-            //progressDialog = new ProgressDialog(SetDropSecond.this);
-            progressDialog = ProgressDialog.show(this, "dialog title",
-                    "dialog message", true);
-            //progressDialog.setMessage("Sending data...");
-            progressDialog.show();
-            Ion.with(getApplicationContext())
-                    .load("http://192.168.4.1/")
-                    .setJsonObjectBody(json)
-                    .asJsonObject()
-                    .setCallback(new FutureCallback<JsonObject>() {
-                        @Override
-                        public void onCompleted(Exception e, JsonObject result) {
+                //progressDialog = new ProgressDialog(SetDropSecond.this);
+                progressDialog = ProgressDialog.show(this, "dialog title",
+                        "dialog message", true);
+                //progressDialog.setMessage("Sending data...");
+                progressDialog.show();
+                Ion.with(getApplicationContext())
+                        .load("http://192.168.4.1/")
+                        .setJsonObjectBody(json)
+                        .asJsonObject()
+                        .setCallback(new FutureCallback<JsonObject>() {
+                            @Override
+                            public void onCompleted(Exception e, JsonObject result) {
 
-                        }
-                    });
-            progressDialog.dismiss();
-            dataSended=true;
+                            }
+                        });
+                progressDialog.dismiss();
+                dataSended=true;
+            }
         }
-    }
         else {
-            Toast.makeText(SetDropSecond.this, "Connect to your Drop wifi", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ConfigDropSecond.this, "Connect to your Drop wifi", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -212,8 +226,10 @@ public class SetDropSecond extends AppCompatActivity {
         spinner.setSelection(6);
     }
 
+    //TODO: preobit na ns(for example 1hour = 60[min]*60[s]*1000 0000[ns])
     private int getResult(String s){
         int result=0;
+        //long hod= 3600000000;
         switch (s){
             case "1 hour":
                 result=1;
@@ -246,26 +262,49 @@ public class SetDropSecond extends AppCompatActivity {
         return result;
     }
 
+
+
     public String getSSID(){
+        checkBoxSsidOfWiFi = (CheckBox) findViewById(R.id.checkBoxSsidOfWiFi);
         EditText eSSID =(EditText) findViewById(R.id.e_SSID);
-        return eSSID.getText().toString();
+        if(checkBoxSsidOfWiFi.isChecked()) {
+            return eSSID.getText().toString();
+        }
+        else {
+            return "";
+        }
     }
 
     public String getPass(){
+        checkBoxPasswordOfWiFi = (CheckBox) findViewById(R.id.checkBoxPasswordOfWiFi);
         EditText ePassword =(EditText) findViewById(R.id.editTextPassword);
-        return ePassword.getText().toString();
+        if(checkBoxPasswordOfWiFi.isChecked()) {
+            return ePassword.getText().toString();
+        }
+        else
+            return "";
     }
 
     public String getDevicePassword(){
+        checkBoxDevicePassword = (CheckBox) findViewById(R.id.checkBoxDevicePassword);
         EditText eDevicePassword =(EditText) findViewById(R.id.editTextDevicePassword);
-        return eDevicePassword.getText().toString();
+        if(checkBoxDevicePassword.isChecked()) {
+            return eDevicePassword.getText().toString();
+        }
+        else
+            return "";
     }
 
     public String getInterval(){
-        spinner = (Spinner) findViewById(R.id.spinnerSendingTime);
-        String pom = String.valueOf(spinner.getSelectedItem());
-        int i = getResult(pom);
-        return String.valueOf(i);
+        checkBoxResetInterval = (CheckBox) findViewById(R.id.checkBoxResetInterval);
+        if(checkBoxResetInterval.isChecked()){
+            spinner = (Spinner) findViewById(R.id.spinnerSendingTime);
+            String pom = String.valueOf(spinner.getSelectedItem());
+            int i = getResult(pom);
+            return String.valueOf(i);
+        }
+        else
+            return "";
     }
 
 

@@ -47,9 +47,9 @@ public class SetDropFirst extends AppCompatActivity {
         sensor_id= getIntent().getStringExtra("sensor_id");
 
 
+            JsonObject json = new JsonObject();
+        json.addProperty("email", email);;
 
-        if(newDevice=="true") {
-/*
         //Generovanie senzor ID funguje, zakomentoval som aby sa nevytvorilo milion senzorov
         Ion.with(getApplicationContext())
                 .load("http://85.93.125.205:8126/api/generateSN")
@@ -62,25 +62,11 @@ public class SetDropFirst extends AppCompatActivity {
                     }
                 });
 
-                */
-        }
-        else {
-            JsonObject json = new JsonObject();
-            json.addProperty("DeviceID", sensor_id);
-            json.addProperty("Setup", 1);
 
-            Ion.with(getApplicationContext())
-                    .load("http://85.93.125.205:8126/api/setsetup")
-                    .setJsonObjectBody(json)
-                    .asJsonObject()
-                    .setCallback(new FutureCallback<JsonObject>() {
-                        @Override
-                        public void onCompleted(Exception e, JsonObject result) {
-                            // do stuff with the result or error
-                        }
-                    });
 
-        }
+
+
+
     }
 
     @Override
@@ -90,7 +76,7 @@ public class SetDropFirst extends AppCompatActivity {
     }
 
     public void toNextActivity(View view){
-        sensor_id = "$2y$10$2SdhktPrmZTRpJC0EzCpJ./PnXoX.K3ZOf8sHPOhUIG8fi.23S7TK";
+        //sensor_id = "$2y$10$2SdhktPrmZTRpJC0EzCpJ./PnXoX.K3ZOf8sHPOhUIG8fi.23S7TK";
         String SSID;
         if (newDevice.equals("true")){
             SSID="ESP";

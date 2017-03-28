@@ -3,6 +3,7 @@ package com.example.tomas.mydrops;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,10 +28,14 @@ import org.json.JSONObject;
 
 public class GraphActivity extends AppCompatActivity {
 
+    //TODO: skulturnit a poriesit nastavenie mena
     //bude potrebne restom sa opytat na pole
     Integer[] pole = {1,55};
     Integer[] state;
     Integer[] battery;
+    String sensor_id;
+    String email;
+    String sensors;
 
     @Override
     public void postponeEnterTransition() {
@@ -42,43 +47,25 @@ public class GraphActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
-        String sensor_id = getIntent().getStringExtra("sensor_id");
+        sensor_id = getIntent().getStringExtra("sensor_id");
+        email = getIntent().getStringExtra("email");
+        sensors = getIntent().getStringExtra("sensors");
+
         Toast.makeText(GraphActivity.this, sensor_id, Toast.LENGTH_SHORT).show();
         getData(sensor_id);
 
-        Button button = (Button) findViewById(R.id.button6);
-
-        // add button listener
-        button.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-
-                // custom dialog
-                final Dialog dialog = new Dialog(GraphActivity.this,R.style.FullHeightDialog);
-                dialog.setContentView(R.layout.dialog);
-                //dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-                // set the custom dialog components - text, image and button
-                //TextView text = (TextView) dialog.findViewById(R.id.text);
-                //text.setText("Android custom dialog example!");
-                //ImageView image = (ImageView) dialog.findViewById(R.id.image);
-                //image.setImageResource(R.drawable.logo);
-/*s
-                Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-                // if button is clicked, close the custom dialog
-                dialogButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });*/
-
-                dialog.show();
-            }
-        });
 
 
+
+    }
+
+    public void toNextActivity(View view){
+        Intent toSetDropFirst = new Intent(GraphActivity.this, ConfigDropFirst.class);
+        toSetDropFirst.putExtra("sensors", sensors);
+        toSetDropFirst.putExtra("email", email);
+        toSetDropFirst.putExtra("new", "false");
+        toSetDropFirst.putExtra("sensor_id", sensor_id);
+        startActivity(toSetDropFirst);
 
     }
 

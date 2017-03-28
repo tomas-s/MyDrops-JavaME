@@ -38,9 +38,24 @@
             android:label="@string/title_activity_show_devices"
             android:theme="@style/AppTheme" />
         <activity android:name=".ShowDrops" />
-        <activity android:name=".SetDropFirst"/>
-        <activity android:name=".SetDropSecond"/>
-        <activity android:name=".SetDropThird"></activity>
+        <activity android:name=".SetDropFirst" />
+        <activity android:name=".SetDropSecond" />
+        <activity android:name=".SetDropThird" />
+        <activity android:name=".ConfigDropFirst" >
+        <intent-filter>
+            <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+        </intent-filter>
+    </activity>
+        <activity android:name=".ConfigDropSecond"></activity>
+        <intent-filter android:priority="100">
+            <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            <action android:name="android.net.wifi.STATE_CHANGE" />
+        </intent-filter>
+        <receiver android:name=".WifiReceiver">
+
+        </receiver>
     </application>
+
+
 
 </manifest>

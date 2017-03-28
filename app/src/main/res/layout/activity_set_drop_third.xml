@@ -23,7 +23,7 @@
         android:textStyle="normal|bold" />
 
     <TextView
-        android:text="Please restart your ESP device"
+        android:text="Please click to Finish then restart your Drop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView12"
