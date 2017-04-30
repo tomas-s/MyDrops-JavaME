@@ -31,14 +31,15 @@
         android:layout_marginStart="21dp"
         android:layout_marginTop="12dp"
         android:id="@+id/textView5"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:text="Battery state:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:id="@+id/textView6" />
+        android:id="@+id/textView6"
+        android:textSize="16sp" />
 
     <com.echo.holographlibrary.LineGraph
         android:layout_width="match_parent"

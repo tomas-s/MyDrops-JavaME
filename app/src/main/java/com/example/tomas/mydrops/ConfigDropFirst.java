@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -110,6 +111,16 @@ public class ConfigDropFirst extends AppCompatActivity {
         isConnected=false;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     public void toNextActivity(View view){
         if(getResult().equals("ok")) {
                         // sensor_id = "$2y$10$2SdhktPrmZTRpJC0EzCpJ./PnXoX.K3ZOf8sHPOhUIG8fi.23S7TK";
@@ -181,9 +192,6 @@ public class ConfigDropFirst extends AppCompatActivity {
 
 
 
-
-    //TODO: zistit ci neni aktivna wifi ESP ak nie je az potom volat novu metodu
-    //TODO:
     public void connect(Context context,String ssid,String password)
     {
 
@@ -307,7 +315,6 @@ public class ConfigDropFirst extends AppCompatActivity {
 
 
 /*
-//TODO: dorobit nespravny login heslo
         WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         WifiInfo w = wifiManager.getConnectionInfo();
         String networkSSID = "ESP8622";

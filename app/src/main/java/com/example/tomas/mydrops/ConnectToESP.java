@@ -113,15 +113,6 @@ public class ConnectToESP extends AppCompatActivity {
 
 
 
-
-
-
-
-
-
-
-//TODO: zistit ci neni aktivna wifi ESP ak nie je az potom volat novu metodu
-    //TODO:
     public void connect(Context context)
     {
 
@@ -185,7 +176,6 @@ public class ConnectToESP extends AppCompatActivity {
         }
 
 /*
-//TODO: dorobit nespravny login heslo
         WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         WifiInfo w = wifiManager.getConnectionInfo();
         String networkSSID = "ESP8622";

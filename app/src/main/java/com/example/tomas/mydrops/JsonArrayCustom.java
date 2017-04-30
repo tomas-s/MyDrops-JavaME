@@ -69,7 +69,7 @@ public class JsonArrayCustom {
         int battery;
 //tu som skoncil ma tu byt arraylist a nie sensor array
             for (int i = 0; i < arrayList.size(); i++) {
-                JSONObject jsonobject = new JSONObject();
+                JSONObject jsonobject;
 
 
                     jsonobject = arrayList.get(i);
@@ -82,16 +82,16 @@ public class JsonArrayCustom {
                     if (state.equals("0")){
                         if (battery<20){
                             pole[i]= "sensor_0";
-                        }if (battery>20&&battery>40){
+                        }if (battery>=20&&battery>40){
                             pole[i]= "sensor_1";
                             }
-                        if (battery>40&&battery>60){
+                        if (battery>=40&&battery>60){
                             pole[i]= "sensor_2";
                         }
-                        if (battery>60&&battery>80){
+                        if (battery>=60&&battery>80){
                             pole[i]= "sensor_3";
                         }
-                        if (battery>80) {
+                        if (battery>=80) {
                             pole[i] = "sensor_4";
                         }
                     }
@@ -99,16 +99,16 @@ public class JsonArrayCustom {
                     if (state.equals("1")){
                         if (battery<20){
                             pole[i]= "sensor_10";
-                        }if (battery>20&&battery>40){
+                        }if (battery>=20&&battery>40){
                             pole[i]= "sensor_11";
                         }
-                        if (battery>40&&battery>60){
+                        if (battery>=40&&battery>60){
                             pole[i]= "sensor_12";
                         }
-                        if (battery>60&&battery>80){
+                        if (battery>=60&&battery>80){
                             pole[i]= "sensor_13";
                         }
-                        if (battery>80){
+                        if (battery>=80){
                             pole[i]= "sensor_14";
                         }
                     }

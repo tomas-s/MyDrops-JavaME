@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -43,18 +44,12 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         if(!(isInternetAvailable(getApplicationContext()))){
             Toast.makeText(LoginActivity.this, "Internet access is not available", Toast.LENGTH_SHORT).show();
         }
     }
-// bola nahradena metodov isInternetAvailable - tato metoda nie je 100% odtestovana
-    private boolean isNetworkAvailable() {
-    ConnectivityManager connectivityManager
-          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-}
+
+
 
     public static boolean isInternetAvailable(Context context) {
         boolean haveConnectedWifi = false;
@@ -86,74 +81,80 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void authentificaion(View view){
-
-        EditText eLogin =(EditText) findViewById(R.id.login);
-        String login = eLogin.getText().toString();
-        EditText ePassword =(EditText) findViewById(R.id.passwprd);
-        String password = ePassword.getText().toString();
-
-        final Button btnLogin = (Button) findViewById(R.id.btn_login);
-
-
-        if(validate(view,login,password)) {
-            JsonObject json = new JsonObject();
-            json.addProperty("email", login);
-            json.addProperty("password", password);
-            //btnLogin.setEnabled(false);
-            //add progress Dialog
-            progressDialog = new ProgressDialog(LoginActivity.this);
-            progressDialog.setMessage("Authenticating...");
-            progressDialog.show();
-
-            Ion.with(getApplicationContext())
-                    .load("http://85.93.125.205:8126/api/login")
-                    .setJsonObjectBody(json)
-                    .asJsonObject()
-                    .setCallback(new FutureCallback<JsonObject>() {
-                        @Override
-                        public void onCompleted(Exception e, JsonObject result) {
-                            if (result != null) {
-                                 toMenuActivity = new Intent(LoginActivity.this, ShowDrops.class);
-
-
-                                String id = result.get("id").toString();
-                                String email = result.get("email").getAsString();
-                                int confirmed = result.get("confirmed").getAsInt();
-                                toMenuActivity.putExtra("id", id);
-                                toMenuActivity.putExtra("email", email);
-                                String url = "http://85.93.125.205:8126/api/users/"+id+"/sensors";
-                                if(confirmed ==1){
-
-                                    Ion.with(getApplicationContext())
-                                            .load(url)
-                                            .asString()
-                                            .setCallback(new FutureCallback<String>() {
-                                                @Override
-                                                public void onCompleted(Exception e, String result) {
-                                                    sensors = result;
-                                                     toMenuActivity.putExtra("sensors", sensors);
-                                                    toMenuActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                     startActivity(toMenuActivity);
-                                                    finish();
-                                                }
-                                            });
-
-                                }
-                                else {
-                                    Toast.makeText(LoginActivity.this, "Confirm you email", Toast.LENGTH_SHORT).show();
-                                }
-
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Check your Internet connection", Toast.LENGTH_SHORT).show();
-                            }
-                            progressDialog.dismiss();
-                            //btnLogin.setEnabled(true);
-
-
-                        }
-                    });
+        if(!(isInternetAvailable(getApplicationContext()))){
+            Toast.makeText(LoginActivity.this, "Internet access is not available", Toast.LENGTH_SHORT).show();
         }
+        else {
+            //View view = this.getCurrentFocus();
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+            EditText eLogin = (EditText) findViewById(R.id.login);
+            String login = eLogin.getText().toString();
+            EditText ePassword = (EditText) findViewById(R.id.passwprd);
+            String password = ePassword.getText().toString();
 
+            final Button btnLogin = (Button) findViewById(R.id.btn_login);
+
+
+            if (validate(view, login, password)) {
+                JsonObject json = new JsonObject();
+                json.addProperty("email", login);
+                json.addProperty("password", password);
+                //btnLogin.setEnabled(false);
+                //add progress Dialog
+                progressDialog = new ProgressDialog(LoginActivity.this);
+                progressDialog.setMessage("Authenticating...");
+                progressDialog.show();
+
+                Ion.with(getApplicationContext())
+                        .load("http://85.93.125.205:8126/api/login")
+                        .setJsonObjectBody(json)
+                        .asJsonObject()
+                        .setCallback(new FutureCallback<JsonObject>() {
+                            @Override
+                            public void onCompleted(Exception e, JsonObject result) {
+                                if (result != null) {
+                                    toMenuActivity = new Intent(LoginActivity.this, ShowDrops.class);
+
+
+                                    String id = result.get("id").toString();
+                                    String email = result.get("email").getAsString();
+                                    int confirmed = result.get("confirmed").getAsInt();
+                                    toMenuActivity.putExtra("id", id);
+                                    toMenuActivity.putExtra("email", email);
+                                    String url = "http://85.93.125.205:8126/api/users/" + id + "/sensors";
+                                    if (confirmed == 1) {
+
+                                        Ion.with(getApplicationContext())
+                                                .load(url)
+                                                .asString()
+                                                .setCallback(new FutureCallback<String>() {
+                                                    @Override
+                                                    public void onCompleted(Exception e, String result) {
+                                                        sensors = result;
+                                                        toMenuActivity.putExtra("sensors", sensors);
+                                                        toMenuActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                        startActivity(toMenuActivity);
+                                                        finish();
+                                                    }
+                                                });
+
+                                    } else {
+                                        Toast.makeText(LoginActivity.this, "Confirm you email", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                } else {
+                                    Toast.makeText(LoginActivity.this, "Problem on server side", Toast.LENGTH_SHORT).show();
+
+
+                                }
+                                progressDialog.dismiss();
+                            }
+                        });
+            }
+        }
     }
 
 
@@ -188,10 +189,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    public void fakeauthentificaion(View view){
-        Intent toMennu = new Intent(LoginActivity.this, MenuActivity.class);
-        startActivity(toMennu);
-    }
 
 
 }

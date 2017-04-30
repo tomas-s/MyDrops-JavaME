@@ -30,8 +30,6 @@ public class ShowDrops extends AppCompatActivity {
 
 
 
-   //TODO: upravit mriezku pri Grid liste
-
 
 
     @Override
@@ -56,6 +54,7 @@ public class ShowDrops extends AppCompatActivity {
         } catch (JSONException e) {
             Toast.makeText(ShowDrops.this, "Chyba pri parsovani", Toast.LENGTH_SHORT).show();
         }
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.floatingActionButton4);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +73,9 @@ public class ShowDrops extends AppCompatActivity {
         //GridView
 
         GridView gridview = (GridView) findViewById(R.id.gridview);
+        TextView emptyView = (TextView)findViewById(R.id.textViewEmpty);
+        emptyView.setText("There is no item");
+        gridview.setEmptyView(emptyView);
         gridview.setAdapter(new ImageAdapter(this,pole,finalList));       //tu pridat pole s nazvom zariadenia , batery statusom, battery icony a stavom
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -224,22 +226,22 @@ public class ShowDrops extends AppCompatActivity {
                 }
 
                 if (battery<20){
-                    textViewBatteryPercentage.setText(Integer.toString(battery));
+                    textViewBatteryPercentage.setText("Battery: "+Integer.toString(battery)+"%");
                     imageViewBattery.setImageResource(R.drawable.battery_0_bars);
                 }if (battery>20&&battery<40){
-                textViewBatteryPercentage.setText(Integer.toString(battery));
+                textViewBatteryPercentage.setText("Battery: "+Integer.toString(battery)+"%");
                 imageViewBattery.setImageResource(R.drawable.battery_1_bar);
             }
                 if (battery>40&&battery<60){
-                    textViewBatteryPercentage.setText(Integer.toString(battery));
+                    textViewBatteryPercentage.setText("Battery: "+Integer.toString(battery)+"%");
                     imageViewBattery.setImageResource(R.drawable.battery_2_bars);
                 }
                 if (battery>60&&battery<80){
-                    textViewBatteryPercentage.setText(Integer.toString(battery));
+                    textViewBatteryPercentage.setText("Battery: "+Integer.toString(battery)+"%");
                     imageViewBattery.setImageResource(R.drawable.battery_3_bars);
                 }
                 if (battery>80) {
-                    textViewBatteryPercentage.setText(Integer.toString(battery));
+                    textViewBatteryPercentage.setText("Battery: "+Integer.toString(battery)+"%");
                     imageViewBattery.setImageResource(R.drawable.battery_4_bars);
                 }
 

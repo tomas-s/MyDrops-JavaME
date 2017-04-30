@@ -1,14 +1,13 @@
 package com.example.tomas.mydrops;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,8 +28,6 @@ import org.json.JSONObject;
 public class GraphActivity extends AppCompatActivity {
 
     //TODO: skulturnit a poriesit nastavenie mena
-    //bude potrebne restom sa opytat na pole
-    Integer[] pole = {1,55};
     Integer[] state;
     Integer[] battery;
     String sensor_id;
@@ -42,7 +39,7 @@ public class GraphActivity extends AppCompatActivity {
         super.postponeEnterTransition();
     }
 
-    //TODO: Prezentacia parsovanie a pridavania grafovpádompádompádom
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +69,7 @@ public class GraphActivity extends AppCompatActivity {
     private void drawGraph(Integer[] pole,LineGraph lg,int range){
         Line l = new Line();
        // if (range==2){
-        l.setColor(Color.GREEN);//}
+        //l.setColor(Color.GREEN);
         LinePoint p = new LinePoint();
         if(pole.length<2){
             addPoint(l, p, 0, pole[0]);
@@ -87,15 +84,15 @@ public class GraphActivity extends AppCompatActivity {
 
 
 
-        l.setColor(Color.parseColor("#FFBB33"));
+        l.setColor(Color.parseColor("#0066FF"));
 
         LineGraph li = lg;
         li.addLine(l);
         li.setUsingDips(true); // pridal som
         li.setRangeY(0, range);
         li.setLineToFill(0);
-        li.setBackgroundColor(Color.GRAY); // pridal som
-        //li.setfil
+        li.setBackgroundColor(Color.WHITE); // pridal som
+
     }
     private void addPoint(Line l,LinePoint p,int x,int y){
         p = new LinePoint();
@@ -144,20 +141,7 @@ public class GraphActivity extends AppCompatActivity {
 
                 });
     }
-/*
-    public void showDialog(){
-        AlertDialog alertDialog = new AlertDialog.Builder(GraphActivity.this).create();
-        alertDialog.setTitle("Alert");
-        alertDialog.setMessage("Alert message to be shown");
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
-    }
-    */
+
 
 
 }
