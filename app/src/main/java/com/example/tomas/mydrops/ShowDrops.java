@@ -20,7 +20,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
+
+//TODO: dorobit refresh zoznamu
 public class ShowDrops extends AppCompatActivity {
     String sensors;
     String s;
@@ -79,11 +82,17 @@ public class ShowDrops extends AppCompatActivity {
         gridview.setAdapter(new ImageAdapter(this,pole,finalList));       //tu pridat pole s nazvom zariadenia , batery statusom, battery icony a stavom
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            String tempBattery;
+            String tempState;
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
                 String sensorID="";
                 try {
-                     sensorID = new JsonArrayCustom(sensors).getSensorID(position);
+                    JsonArrayCustom json = new JsonArrayCustom(sensors);
+                    sensorID = json.getSensorID(position);
+                    tempBattery = json.getBattery(position);
+                    tempState = json.getState(position);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     Toast.makeText(ShowDrops.this, "Chyba pri ziskavani sensorID", Toast.LENGTH_SHORT).show();
@@ -94,6 +103,8 @@ public class ShowDrops extends AppCompatActivity {
                 toGraphActivity.putExtra("sensors", sensors);
                 toGraphActivity.putExtra("new", "false");
                 toGraphActivity.putExtra("email", email);
+                toGraphActivity.putExtra("tempBattery", tempBattery);
+                toGraphActivity.putExtra("tempState", tempState);
                 startActivity(toGraphActivity);
 
                 //Toast.makeText(ShowDrops.this,"" + sensoorID,Toast.LENGTH_SHORT).show();

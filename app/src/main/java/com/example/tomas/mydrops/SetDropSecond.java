@@ -60,11 +60,7 @@ public class SetDropSecond extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onStart();
-        //connectToOldWifi();
-        /*Intent toMenuActivity = new Intent(SetDropSecond.this, ShowDrops.class);
-        toMenuActivity.putExtra("sensors", sensors);
-        toMenuActivity.putExtra("email", email);
-        startActivity(toMenuActivity);*/
+
     }
 
 

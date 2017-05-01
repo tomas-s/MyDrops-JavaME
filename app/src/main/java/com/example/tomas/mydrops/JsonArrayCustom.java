@@ -45,12 +45,9 @@ public class JsonArrayCustom {
         arrayList= new ArrayList<JSONObject>();
 
         for (int i = 0; i < sensorArray.length(); i++) {
-            //JSONObject jsonobject = new JSONObject();
              sensorArray.getJSONObject(i);
             if(sensorArray.getJSONObject(i).getString("state")!=null){
-                if(Integer.parseInt(sensorArray.getJSONObject(i).getString("battery"))!=0){
                      arrayList.add(sensorArray.getJSONObject(i));
-                }
                 }
             }
 
@@ -114,6 +111,44 @@ public class JsonArrayCustom {
                     }
 
 
+                 /*
+                 if (state.equals("0")){
+                        if (battery<10){
+                            pole[i]= "sensor_0";
+                        }if (battery>=10&&battery>25){
+                            pole[i]= "sensor_1";
+                            }
+                        if (battery>=25&&battery>50){
+                            pole[i]= "sensor_2";
+                        }
+                        if (battery>=50&&battery>75){
+                            pole[i]= "sensor_3";
+                        }
+                        if (battery>=75) {
+                            pole[i] = "sensor_4";
+                        }
+                    }
+
+                    if (state.equals("1")){
+                        if (battery<10){
+                            pole[i]= "sensor_10";
+                        }if (battery>=10&&battery>25){
+                            pole[i]= "sensor_11";
+                        }
+                        if (battery>=25&&battery>50){
+                            pole[i]= "sensor_12";
+                        }
+                        if (battery>=50&&battery>75){
+                            pole[i]= "sensor_13";
+                        }
+                        if (battery>=75){
+                            pole[i]= "sensor_14";
+                        }
+                    }
+                 */
+
+
+
     }
         return pole;
 }
@@ -123,6 +158,17 @@ public class JsonArrayCustom {
         JSONObject jsonObject = arrayList.get(i);
         return jsonObject.getString("sensor_id");
     }
+
+    public String getBattery(int i) throws JSONException {
+        JSONObject jsonObject = arrayList.get(i);
+        return jsonObject.getString("battery");
+    }
+
+    public String getState(int i) throws JSONException {
+        JSONObject jsonObject = arrayList.get(i);
+        return jsonObject.getString("state");
+    }
+
 
 
     public Integer[] getBattery() throws JSONException {

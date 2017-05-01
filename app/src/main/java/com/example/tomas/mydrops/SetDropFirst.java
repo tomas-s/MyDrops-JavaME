@@ -76,7 +76,6 @@ public class SetDropFirst extends AppCompatActivity {
     }
 
     public void toNextActivity(View view){
-        //sensor_id = "$2y$10$2SdhktPrmZTRpJC0EzCpJ./PnXoX.K3ZOf8sHPOhUIG8fi.23S7TK";
         String SSID;
         if (newDevice.equals("true")){
             SSID="ESP";
@@ -97,8 +96,6 @@ public class SetDropFirst extends AppCompatActivity {
 
 
 
-    //TODO: zistit ci neni aktivna wifi ESP ak nie je az potom volat novu metodu
-    //TODO:
     public void connect(Context context,String ssid,String password)
     {
         WifiConfiguration wfc = new WifiConfiguration();

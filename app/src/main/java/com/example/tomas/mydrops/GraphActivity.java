@@ -33,6 +33,7 @@ public class GraphActivity extends AppCompatActivity {
     String sensor_id;
     String email;
     String sensors;
+    int x;
 
     @Override
     public void postponeEnterTransition() {
@@ -47,13 +48,17 @@ public class GraphActivity extends AppCompatActivity {
         sensor_id = getIntent().getStringExtra("sensor_id");
         email = getIntent().getStringExtra("email");
         sensors = getIntent().getStringExtra("sensors");
-
+        final String tempBattery = getIntent().getStringExtra("tempBattery");
+        final String tempState = getIntent().getStringExtra("tempState");
         Toast.makeText(GraphActivity.this, sensor_id, Toast.LENGTH_SHORT).show();
         getData(sensor_id);
-
-
-
-
+        TextView dropState = (TextView)findViewById(R.id.textView5);
+        dropState.setText("Drop state history: "+tempState);
+        TextView batteryState = (TextView)findViewById(R.id.textView6);
+        batteryState.setText("Battery history: "+tempBattery+"%");
+        TextView textViewEsp = (TextView)findViewById(R.id.textViewESP);
+        String espName = "ESP "+sensor_id.substring(sensor_id.length()-6);
+        textViewEsp.setText(espName);
     }
 
     public void toNextActivity(View view){
@@ -68,23 +73,22 @@ public class GraphActivity extends AppCompatActivity {
 
     private void drawGraph(Integer[] pole,LineGraph lg,int range){
         Line l = new Line();
-       // if (range==2){
-        //l.setColor(Color.GREEN);
+        l.setColor(Color.BLACK);
         LinePoint p = new LinePoint();
         if(pole.length<2){
             addPoint(l, p, 0, pole[0]);
             addPoint(l, p, 1, pole[0]);
         }
         else {
-            for (int i = 0; i < pole.length; i++) {
-                addPoint(l, p, i, pole[i]);
+            x=0;
+            for (int i = pole.length-1; i >= 0; i--) {
+                addPoint(l, p, x, pole[i]);
+                x++;
             }
         }
 
 
 
-
-        l.setColor(Color.parseColor("#0066FF"));
 
         LineGraph li = lg;
         li.addLine(l);

@@ -1,10 +1,8 @@
 package com.example.tomas.mydrops;
 
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiConfiguration;
@@ -25,7 +23,7 @@ import com.koushikdutta.ion.Ion;
 
 import java.util.Iterator;
 import java.util.List;
-
+//TODO: niekedy stratime sensor ID
 public class ConfigDropFirst extends AppCompatActivity {
 
     NetworkInfo mWifi;
@@ -122,31 +120,31 @@ public class ConfigDropFirst extends AppCompatActivity {
     }
 
     public void toNextActivity(View view){
-        if(getResult().equals("ok")) {
-                        // sensor_id = "$2y$10$2SdhktPrmZTRpJC0EzCpJ./PnXoX.K3ZOf8sHPOhUIG8fi.23S7TK";
-            final EditText editTextDropPassword = (EditText) findViewById(R.id.editTextDropPassword);
-            String password = editTextDropPassword.getText().toString();
-            String SSID;
-            SSID = "ESP " + sensor_id.substring(sensor_id.length() - 6);
+        if(validate(view)) {//false - ak je kratke heslo
+            if (getResult().equals("ok")) {
+                // sensor_id = "$2y$10$2SdhktPrmZTRpJC0EzCpJ./PnXoX.K3ZOf8sHPOhUIG8fi.23S7TK";
+                final EditText editTextDropPassword = (EditText) findViewById(R.id.editTextDropPassword);
+                String password = editTextDropPassword.getText().toString();
+                String SSID;
+                SSID = "ESP " + sensor_id.substring(sensor_id.length() - 6);
 
-            connect(getApplicationContext(), SSID, password);
-            try {
-                t.join();
+                connect(getApplicationContext(), SSID, password);
+                try {
+                    t.join();
 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            Intent toSetDropSecond = new Intent(ConfigDropFirst.this, ConfigDropSecond.class);
-            toSetDropSecond.putExtra("sensor_id", getSensor_id());
-            toSetDropSecond.putExtra("sensors", sensors);
-            toSetDropSecond.putExtra("email", email);
-            toSetDropSecond.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            if(isConnected) {
-                startActivity(toSetDropSecond);
-            }
-            else {
-                eDevicePassword.setError("Password is not valid");
-            }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Intent toSetDropSecond = new Intent(ConfigDropFirst.this, ConfigDropSecond.class);
+                toSetDropSecond.putExtra("sensor_id", getSensor_id());
+                toSetDropSecond.putExtra("sensors", sensors);
+                toSetDropSecond.putExtra("email", email);
+                toSetDropSecond.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (isConnected) {
+                    startActivity(toSetDropSecond);
+                } else {
+                    eDevicePassword.setError("Password is not valid");
+                }
             /*Intent toSetDropSecond = new Intent(ConfigDropFirst.this, ConfigDropSecond.class);
             toSetDropSecond.putExtra("sensor_id", getSensor_id());
             toSetDropSecond.putExtra("sensors", sensors);
@@ -183,14 +181,29 @@ public class ConfigDropFirst extends AppCompatActivity {
                 e.printStackTrace();
             }*/
 
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Sensor ID not found", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Sensor ID not found", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
 
+    public boolean validate(View view) {
+        boolean valid = true;
+        EditText ePassword =(EditText) findViewById(R.id.editTextDropPassword);
 
+
+        if (ePassword.length() > 25) {
+            ePassword.setError("The password is too long.");
+            valid = false;
+        }
+
+        if (ePassword.length() < 4) {
+            ePassword.setError("The password is too short.");
+            valid = false;
+        }
+        return valid;
+    }
 
     public void connect(Context context,String ssid,String password)
     {

@@ -171,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
             eLogin.setError(null);
         }
 
-        if (ePassword.length() < 4 || ePassword.length() > 10) {
+        if (ePassword.length() < 4 || ePassword.length() > 25) {
             ePassword.setError("Password is not valid");
             valid = false;
             return valid;

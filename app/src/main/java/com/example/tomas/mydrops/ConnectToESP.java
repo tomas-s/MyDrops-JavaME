@@ -30,7 +30,7 @@ public class ConnectToESP extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_connect_to_esp);
+        //setContentView(R.layout.activity_connect_to_esp);
         addItems();
         spinner = (Spinner) findViewById(R.id.spinnerSendingTime);
         spinner.setSelection(8);

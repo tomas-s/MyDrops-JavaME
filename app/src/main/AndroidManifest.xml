@@ -27,7 +27,6 @@
         <activity
             android:name=".SignupActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".MenuActivity" />
         <activity
             android:name=".ConnectToESP"
             android:label="@string/title_activity_connect_to_esp"
@@ -51,9 +50,6 @@
             <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             <action android:name="android.net.wifi.STATE_CHANGE" />
         </intent-filter>
-        <receiver android:name=".WifiReceiver">
-
-        </receiver>
     </application>
 
 

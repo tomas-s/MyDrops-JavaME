@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
-//TODO: na klik finish nacita nove zariadenia
+
 public class SetDropThird extends AppCompatActivity {
     String sensors;
     String email;

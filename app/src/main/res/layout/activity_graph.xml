@@ -8,38 +8,18 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.tomas.mydrops.GraphActivity">
+    tools:context="com.example.tomas.mydrops.GraphActivity"
+    android:background="#dddddd">
 
-
-    <com.echo.holographlibrary.LineGraph
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/state"
-        android:layout_marginTop="41dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
     <TextView
-        android:text="State:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="21dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="12dp"
-        android:id="@+id/textView5"
-        android:textSize="16sp" />
-
-    <TextView
-        android:text="Battery state:"
+        android:text="Battery history:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:id="@+id/textView6"
         android:textSize="16sp" />
+
 
     <com.echo.holographlibrary.LineGraph
         android:layout_width="match_parent"
@@ -48,8 +28,37 @@
         android:layout_below="@+id/textView6"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="17dp" />
+        android:layout_marginTop="19dp" />
 
+    <TextView
+        android:text="Drop state history:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5"
+        android:textSize="16sp"
+        android:layout_above="@+id/state"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="13dp" />
+
+    <TextView
+        android:text=" "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textView5"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textViewESP"
+        android:textStyle="normal|bold"
+        android:textSize="16sp" />
+
+    <com.echo.holographlibrary.LineGraph
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/state"
+        android:layout_above="@+id/textView6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="12dp" />
 
     <Button
         android:id="@+id/button_Setup"
@@ -58,15 +67,15 @@
         android:gravity="left|center_vertical"
         android:paddingLeft="15dp"
         android:paddingRight="20dp"
-        android:drawableLeft="@drawable/support"
         android:drawablePadding="5dp"
+        android:drawableLeft="@drawable/support"
         android:text="Set drop"
         android:layout_width="wrap_content"
         android:background="@android:color/holo_blue_bright"
         android:onClick="toNextActivity"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/battery"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/battery" />
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>
