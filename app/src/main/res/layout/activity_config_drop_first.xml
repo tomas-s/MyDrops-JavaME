@@ -64,7 +64,7 @@
         android:layout_alignStart="@+id/textView8" />
 
     <TextView
-        android:text="Restart your Drop and wait 4 second then connect to them"
+        android:text="Two times press restart button on your Drop device then wait 5 second and click to Next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView9"

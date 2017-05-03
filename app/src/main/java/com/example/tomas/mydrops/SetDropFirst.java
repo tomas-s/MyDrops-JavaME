@@ -37,6 +37,7 @@ public class SetDropFirst extends AppCompatActivity {
     String email;
     String newDevice;
     String sensor_id;
+    String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,12 +46,11 @@ public class SetDropFirst extends AppCompatActivity {
          sensors = getIntent().getStringExtra("sensors");
         newDevice = getIntent().getStringExtra("new");
         sensor_id= getIntent().getStringExtra("sensor_id");
-
+        id=getIntent().getStringExtra("id");
 
             JsonObject json = new JsonObject();
         json.addProperty("email", email);;
 
-        //Generovanie senzor ID funguje, zakomentoval som aby sa nevytvorilo milion senzorov
         Ion.with(getApplicationContext())
                 .load("http://85.93.125.205:8126/api/generateSN")
                 .setJsonObjectBody(json)
@@ -61,12 +61,6 @@ public class SetDropFirst extends AppCompatActivity {
                         setSensor_id(result.get("sensor_id").getAsString());
                     }
                 });
-
-
-
-
-
-
     }
 
     @Override
@@ -88,6 +82,7 @@ public class SetDropFirst extends AppCompatActivity {
         toSetDropSecond.putExtra("sensor_id", getSensor_id());
         toSetDropSecond.putExtra("sensors", sensors);
         toSetDropSecond.putExtra("email", email);
+        toSetDropSecond.putExtra("id", id);
         toSetDropSecond.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(toSetDropSecond);
     }
@@ -149,7 +144,7 @@ public class SetDropFirst extends AppCompatActivity {
             // leNetwork(networkId, true) to connect
         }
         if(wfMgr.enableNetwork(networkId,true)){
-            Toast.makeText(context,"Aktivnova nova wifi",Toast.LENGTH_LONG).show();
+            //Toast.makeText(context,"Aktivnova nova wifi",Toast.LENGTH_LONG).show();
             Log.i("Aktivovana new wifi",Integer.toString(networkId));
         }
 

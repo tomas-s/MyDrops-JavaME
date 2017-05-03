@@ -47,12 +47,13 @@ public class ConfigDropFirst extends AppCompatActivity {
     String email;
     String newDevice;
     String sensor_id;
+    String id;
     ProgressDialog progress;
     ConnectivityManager connManager;
     boolean isConnected= false;
     EditText eDevicePassword;
     Thread t,t1;
-
+/*
     public String getResult() {
         return result;
     }
@@ -63,7 +64,7 @@ public class ConfigDropFirst extends AppCompatActivity {
 
 
 
-    String result="no ok";
+    String result="no ok";*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,10 +73,11 @@ public class ConfigDropFirst extends AppCompatActivity {
         sensors = getIntent().getStringExtra("sensors");
         newDevice = getIntent().getStringExtra("new");
         sensor_id= getIntent().getStringExtra("sensor_id");
+        id=getIntent().getStringExtra("id");
         eDevicePassword =(EditText) findViewById(R.id.editTextDropPassword);
 
 
-
+/*
             JsonObject json = new JsonObject();
             json.addProperty("DeviceID", sensor_id);
             json.addProperty("Setup", 1);
@@ -90,7 +92,7 @@ public class ConfigDropFirst extends AppCompatActivity {
                             setResult(result.get("result").getAsString());
                         }
                     });
-
+*/
 
 
     }
@@ -121,7 +123,7 @@ public class ConfigDropFirst extends AppCompatActivity {
 
     public void toNextActivity(View view){
         if(validate(view)) {//false - ak je kratke heslo
-            if (getResult().equals("ok")) {
+           // if (getResult().equals("ok")) {
                 // sensor_id = "$2y$10$2SdhktPrmZTRpJC0EzCpJ./PnXoX.K3ZOf8sHPOhUIG8fi.23S7TK";
                 final EditText editTextDropPassword = (EditText) findViewById(R.id.editTextDropPassword);
                 String password = editTextDropPassword.getText().toString();
@@ -139,6 +141,7 @@ public class ConfigDropFirst extends AppCompatActivity {
                 toSetDropSecond.putExtra("sensor_id", getSensor_id());
                 toSetDropSecond.putExtra("sensors", sensors);
                 toSetDropSecond.putExtra("email", email);
+                toSetDropSecond.putExtra("id", id);
                 toSetDropSecond.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 if (isConnected) {
                     startActivity(toSetDropSecond);
@@ -181,9 +184,10 @@ public class ConfigDropFirst extends AppCompatActivity {
                 e.printStackTrace();
             }*/
 
-            } else {
+           // }
+            /*else {
                 Toast.makeText(getApplicationContext(), "Sensor ID not found", Toast.LENGTH_LONG).show();
-            }
+            }*/
         }
     }
 

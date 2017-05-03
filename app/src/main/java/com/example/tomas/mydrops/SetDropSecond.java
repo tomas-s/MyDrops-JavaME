@@ -31,11 +31,14 @@ import com.koushikdutta.ion.Ion;
 import java.util.Iterator;
 import java.util.List;
 
+import static android.R.attr.id;
+
 public class SetDropSecond extends AppCompatActivity {
     String sensors;
     String email;
     Spinner spinner;
     String sensor_id;
+    String id;
     boolean dataSended=false;
     ProgressDialog progressDialog;
 
@@ -51,8 +54,7 @@ public class SetDropSecond extends AppCompatActivity {
         sensor_id = getIntent().getStringExtra("sensor_id");
         email = getIntent().getStringExtra("email");
         sensors = getIntent().getStringExtra("sensors");
-
-        //if sensor_id.equals("");
+        id=getIntent().getStringExtra("id");
         Toast.makeText(SetDropSecond.this, sensor_id, Toast.LENGTH_SHORT).show();
     }
 
@@ -113,38 +115,17 @@ public class SetDropSecond extends AppCompatActivity {
             Log.i("Aktivovana old wifi",Integer.toString(networkId));
         }
     }
-    public void connectToEsp(View view){
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://192.168.4.1/interval/2";
 
-// Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        String r = response;
-                        Log.d("Response:",response);
-                        // Display the first 500 characters of the response string.
-                        //mTextView.setText("Response is: "+ response.substring(0,500));
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //  mTextView.setText("That didn't work!");
-            }
-        });
-// Add the request to the RequestQueue.
-        queue.add(stringRequest);
-    }
 
 
     public void toSetDropThird(View view){
         if (dataSended) {
             connectToOldWifi();
-            Intent toSetDropThird = new Intent(SetDropSecond.this, SetDropThird.class);
+            Intent toSetDropThird = new Intent(SetDropSecond.this, ShowDrops.class);
             toSetDropThird.putExtra("sensors", sensors);
             toSetDropThird.putExtra("email", email);
             toSetDropThird.putExtra("sensor_id", sensor_id);
+            toSetDropThird.putExtra("id", id);
             //toSetDropThird.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(toSetDropThird);
         }

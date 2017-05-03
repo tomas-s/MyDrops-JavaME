@@ -18,6 +18,7 @@ public class SetDropThird extends AppCompatActivity {
     String sensors;
     String email;
     String sensor_id;
+    String id;
 
     public String getResultRequest() {
         return resultRequest;
@@ -36,6 +37,7 @@ public class SetDropThird extends AppCompatActivity {
         email = getIntent().getStringExtra("email");
         sensors = getIntent().getStringExtra("sensors");
         sensor_id = getIntent().getStringExtra("sensor_id");
+        id=getIntent().getStringExtra("id");
     }
     @Override
     protected void onDestroy() {
@@ -54,7 +56,7 @@ Mode: 1
 
 
     public void sendData(View view){
-
+/*
         JsonObject json = new JsonObject();
         json.addProperty("DeviceID", sensor_id);
         json.addProperty("Setup", "0");
@@ -70,9 +72,11 @@ Mode: 1
                         Toast.makeText(getApplicationContext(),getResultRequest(),Toast.LENGTH_LONG).show();
                     }
                 });
+                */
         Intent toMenuActivity = new Intent(SetDropThird.this, ShowDrops.class);
         toMenuActivity.putExtra("sensors", sensors);
         toMenuActivity.putExtra("email", email);
+        toMenuActivity.putExtra("id", id);
         startActivity(toMenuActivity);
         Toast.makeText(getApplicationContext(),"Now restart your Drop device",Toast.LENGTH_LONG).show();
     }

@@ -48,7 +48,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="450dp"
             android:weightSum="1">
 
             <GridView
@@ -65,7 +65,9 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_weight="0.20" />
+
         </LinearLayout>
+
     </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
@@ -80,6 +82,21 @@
         android:layout_alignParentEnd="true"
         app:backgroundTint="@android:color/holo_blue_bright"
         app:elevation="0dp" />
+
+    <Button
+        android:text="Refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="20dp"
+        android:drawablePadding="5dp"
+        android:drawableLeft="@drawable/refresh"
+        android:background="@android:color/holo_blue_bright"
+        android:onClick="refreshDevice"
+        android:id="@+id/bRefresh"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/floatingActionButton4" />
 
 
 </RelativeLayout>

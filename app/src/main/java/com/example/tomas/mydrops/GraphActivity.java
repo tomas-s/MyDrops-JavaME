@@ -33,6 +33,7 @@ public class GraphActivity extends AppCompatActivity {
     String sensor_id;
     String email;
     String sensors;
+    String id;
     int x;
 
     @Override
@@ -50,7 +51,7 @@ public class GraphActivity extends AppCompatActivity {
         sensors = getIntent().getStringExtra("sensors");
         final String tempBattery = getIntent().getStringExtra("tempBattery");
         final String tempState = getIntent().getStringExtra("tempState");
-        Toast.makeText(GraphActivity.this, sensor_id, Toast.LENGTH_SHORT).show();
+        id = getIntent().getStringExtra("id");
         getData(sensor_id);
         TextView dropState = (TextView)findViewById(R.id.textView5);
         dropState.setText("Drop state history: "+tempState);
@@ -67,6 +68,7 @@ public class GraphActivity extends AppCompatActivity {
         toSetDropFirst.putExtra("email", email);
         toSetDropFirst.putExtra("new", "false");
         toSetDropFirst.putExtra("sensor_id", sensor_id);
+        toSetDropFirst.putExtra("id", id);
         startActivity(toSetDropFirst);
 
     }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,21 +16,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 
-//TODO: dorobit refresh zoznamu
 public class ShowDrops extends AppCompatActivity {
     String sensors;
     String s;
     String [] pole;
     ArrayList<JSONObject> finalList;
-
+    String userId;
+    GridView gridview;
 
 
 
@@ -43,6 +48,7 @@ public class ShowDrops extends AppCompatActivity {
 
         final String email = getIntent().getStringExtra("email");
         final String sensors = getIntent().getStringExtra("sensors");
+        userId = getIntent().getStringExtra("id");
         JsonArrayCustom jsonArrayCustom = null;
         try {
             jsonArrayCustom = new JsonArrayCustom(sensors);
@@ -68,6 +74,7 @@ public class ShowDrops extends AppCompatActivity {
                 toSetDropFirst.putExtra("email", email);
                 toSetDropFirst.putExtra("new", "true");
                 toSetDropFirst.putExtra("sensor_id", "-1");
+                toSetDropFirst.putExtra("id",userId);
                 startActivity(toSetDropFirst);
 
             }
@@ -75,9 +82,9 @@ public class ShowDrops extends AppCompatActivity {
 
         //GridView
 
-        GridView gridview = (GridView) findViewById(R.id.gridview);
+        gridview = (GridView) findViewById(R.id.gridview);
         TextView emptyView = (TextView)findViewById(R.id.textViewEmpty);
-        emptyView.setText("There is no item");
+        emptyView.setText("You don not have created any device");
         gridview.setEmptyView(emptyView);
         gridview.setAdapter(new ImageAdapter(this,pole,finalList));       //tu pridat pole s nazvom zariadenia , batery statusom, battery icony a stavom
 
@@ -98,21 +105,65 @@ public class ShowDrops extends AppCompatActivity {
                     Toast.makeText(ShowDrops.this, "Chyba pri ziskavani sensorID", Toast.LENGTH_SHORT).show();
                 }
 
-                Intent toGraphActivity = new Intent(ShowDrops.this, GraphActivity.class);
-                toGraphActivity.putExtra("sensor_id", sensorID);
-                toGraphActivity.putExtra("sensors", sensors);
-                toGraphActivity.putExtra("new", "false");
-                toGraphActivity.putExtra("email", email);
-                toGraphActivity.putExtra("tempBattery", tempBattery);
-                toGraphActivity.putExtra("tempState", tempState);
-                startActivity(toGraphActivity);
+                if(!tempState.equals("0")) {
+                    Intent toGraphActivity = new Intent(ShowDrops.this, GraphActivity.class);
+                    toGraphActivity.putExtra("sensor_id", sensorID);
+                    toGraphActivity.putExtra("sensors", sensors);
+                    toGraphActivity.putExtra("new", "false");
+                    toGraphActivity.putExtra("email", email);
+                    toGraphActivity.putExtra("tempBattery", tempBattery);
+                    toGraphActivity.putExtra("tempState", tempState);
+                    toGraphActivity.putExtra("id", userId);
+                    startActivity(toGraphActivity);
+                }
+                else {
+                    Intent toSetDropFirst = new Intent(ShowDrops.this, ConfigDropFirst.class);
+                    toSetDropFirst.putExtra("sensors", sensors);
+                    toSetDropFirst.putExtra("email", email);
+                    toSetDropFirst.putExtra("new", "false");
+                    toSetDropFirst.putExtra("sensor_id", sensorID);
+                    toSetDropFirst.putExtra("id", userId);
+                    startActivity(toSetDropFirst);
+                }
 
-                //Toast.makeText(ShowDrops.this,"" + sensoorID,Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
+    public void refreshDevice(View view){
+        if(!(LoginActivity.isInternetAvailable(getApplicationContext()))){
+            Toast.makeText(ShowDrops.this, "Internet is not available", Toast.LENGTH_SHORT).show();
+        }
+            else {
+            String url = "http://85.93.125.205:8126/api/users/" + userId + "/sensors";
+            final Context context = getApplicationContext();
+            Ion.with(getApplicationContext())
+                    .load(url)
+                    .asString()
+                    .setCallback(new FutureCallback<String>() {
+                        @Override
+                        public void onCompleted(Exception e, String result) {
+                            JsonArrayCustom jsonArrayCustom = null;
+                            try {
+                                jsonArrayCustom = new JsonArrayCustom(result);
+                            } catch (JSONException b) {
+                                e.printStackTrace();
+                                Toast.makeText(ShowDrops.this, "Can not make a JSON", Toast.LENGTH_SHORT).show();
+                            }
+                            try {
+                                pole = jsonArrayCustom.sensorParse();
+                                finalList = jsonArrayCustom.getArrayList();
+
+                            } catch (JSONException b) {
+                                Toast.makeText(ShowDrops.this, "JSON parse error", Toast.LENGTH_SHORT).show();
+                            }
+                            gridview.setAdapter(new ImageAdapter(context, pole, finalList));
+                        }
+                    });
+        }
+
+    }
 
 
     private JSONArray sensorParse(String sensros){
@@ -178,24 +229,6 @@ public class ShowDrops extends AppCompatActivity {
             return 0;
         }
 
-        // create a new ImageView for each item referenced by the Adapter
-        /*
-        public View getView(int position, View convertView, ViewGroup parent) {
-           // setmThumbIds(pole);
-            ImageView imageView;
-            if (convertView == null) {
-                // if it's not recycled, initialize some attributes
-                imageView = new ImageView(mContext);
-                imageView.setLayoutParams(new GridView.LayoutParams(285, 285));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(8, 8, 8, 8);
-            } else {
-                imageView = (ImageView) convertView;
-            }
-
-            imageView.setImageResource(mThumbIds[position]);
-            return imageView;
-        }*/
 
 
 
@@ -216,6 +249,8 @@ public class ShowDrops extends AppCompatActivity {
                  ImageView imageViewBattery=(ImageView) gridView.findViewById(R.id.imageViewBattery);
                  TextView textViewEspName = (TextView) gridView.findViewById(R.id.textViewEspName);
                  TextView textViewBatteryPercentage = (TextView) gridView.findViewById(R.id.textViewBatteryPercentage);
+                 TextView textViewStatus = (TextView) gridView.findViewById(R.id.textViewStatus);
+
 
                 JSONObject jsonobject;
                 jsonobject = finalList.get(position);
@@ -229,12 +264,19 @@ public class ShowDrops extends AppCompatActivity {
                 }
 
                 textViewEspName.setText(name);
-                if (state.equals("0")){
+                if (state.equals("0")) {
                     imageViewStatus.setImageResource(R.drawable.sm_icon_red);
+                    textViewStatus.setText("Contact was lost");
                 }
-                else {
+                if (state.equals("1")){
                     imageViewStatus.setImageResource(R.drawable.sm_icon_green);
+                    textViewStatus.setText("Water is not detect");
                 }
+                if (state.equals("2")) {
+                    imageViewStatus.setImageResource(R.drawable.sm_icon_red);
+                    textViewStatus.setText("Water was detect!");
+                }
+
 
                 if (battery<20){
                     textViewBatteryPercentage.setText("Battery: "+Integer.toString(battery)+"%");

@@ -46,7 +46,7 @@ public class JsonArrayCustom {
 
         for (int i = 0; i < sensorArray.length(); i++) {
              sensorArray.getJSONObject(i);
-            if(sensorArray.getJSONObject(i).getString("state")!=null){
+            if(!sensorArray.getJSONObject(i).getString("state").equals("")){
                      arrayList.add(sensorArray.getJSONObject(i));
                 }
             }
@@ -64,19 +64,20 @@ public class JsonArrayCustom {
         
         String state;
         int battery;
-//tu som skoncil ma tu byt arraylist a nie sensor array
             for (int i = 0; i < arrayList.size(); i++) {
                 JSONObject jsonobject;
 
 
                     jsonobject = arrayList.get(i);
 
-
                      state = jsonobject.getString("state");
                      battery = Integer.parseInt(jsonobject.getString("battery"));
 
+                    if(state.equals("0")){
+                        pole[i]= "sensor_x";
+                    }
 
-                    if (state.equals("0")){
+                    if (state.equals("1")){
                         if (battery<20){
                             pole[i]= "sensor_0";
                         }if (battery>=20&&battery>40){
@@ -93,7 +94,7 @@ public class JsonArrayCustom {
                         }
                     }
 
-                    if (state.equals("1")){
+                    if (state.equals("2")){
                         if (battery<20){
                             pole[i]= "sensor_10";
                         }if (battery>=20&&battery>40){

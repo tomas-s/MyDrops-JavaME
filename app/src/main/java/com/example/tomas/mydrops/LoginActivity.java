@@ -45,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         if(!(isInternetAvailable(getApplicationContext()))){
-            Toast.makeText(LoginActivity.this, "Internet access is not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Internet is not available", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void authentificaion(View view){
         if(!(isInternetAvailable(getApplicationContext()))){
-            Toast.makeText(LoginActivity.this, "Internet access is not available", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "Internet is not available", Toast.LENGTH_SHORT).show();
         }
         else {
             //View view = this.getCurrentFocus();
@@ -94,7 +94,6 @@ public class LoginActivity extends AppCompatActivity {
             String login = eLogin.getText().toString();
             EditText ePassword = (EditText) findViewById(R.id.passwprd);
             String password = ePassword.getText().toString();
-
             final Button btnLogin = (Button) findViewById(R.id.btn_login);
 
 
@@ -146,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
                                     }
 
                                 } else {
-                                    Toast.makeText(LoginActivity.this, "Problem on server side", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(LoginActivity.this, "Incorect username or password", Toast.LENGTH_SHORT).show();
 
 
                                 }

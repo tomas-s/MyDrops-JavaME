@@ -47,4 +47,13 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"></TextView>
 
+    <TextView
+        android:text=" "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textViewStatus"
+        android:layout_alignBottom="@+id/imageViewStatus"
+        android:layout_toRightOf="@+id/imageViewStatus"
+        android:layout_toEndOf="@+id/imageViewStatus" />
+
 </RelativeLayout>

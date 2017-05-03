@@ -171,7 +171,6 @@ public class ConnectToESP extends AppCompatActivity {
             // leNetwork(networkId, true) to connect
         }
         if(wfMgr.enableNetwork(networkId,true)){
-            Toast.makeText(context,"Aktivnova nova wifi",Toast.LENGTH_LONG).show();
             Log.i("Aktivovana new wifi",Integer.toString(networkId));
         }
 

@@ -34,6 +34,7 @@ import java.util.List;
 public class ConfigDropSecond extends AppCompatActivity {
     String sensors;
     String email;
+    String id;
     Spinner spinner;
     String sensor_id;
     boolean dataSended=false;
@@ -49,10 +50,10 @@ public class ConfigDropSecond extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         spinner = (Spinner) findViewById(R.id.spinnerSendingTime);
-        //spinner.setSelection(7);
         setContentView(R.layout.activity_config_drop_second);
         addItems();
         sensor_id = getIntent().getStringExtra("sensor_id");
+        id=getIntent().getStringExtra("id");
         email = getIntent().getStringExtra("email");
         sensors = getIntent().getStringExtra("sensors");
     }
@@ -159,10 +160,11 @@ public class ConfigDropSecond extends AppCompatActivity {
     public void toSetDropThird(View view){
         if (dataSended) {
             connectToOldWifi();
-            Intent toSetDropThird = new Intent(ConfigDropSecond.this, SetDropThird.class);
+            Intent toSetDropThird = new Intent(ConfigDropSecond.this, ShowDrops.class);
             toSetDropThird.putExtra("sensors", sensors);
             toSetDropThird.putExtra("email", email);
             toSetDropThird.putExtra("sensor_id", sensor_id);
+            toSetDropThird.putExtra("id", id);
             //toSetDropThird.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(toSetDropThird);
         }
