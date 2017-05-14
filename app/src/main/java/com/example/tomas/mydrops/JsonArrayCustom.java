@@ -78,35 +78,36 @@ public class JsonArrayCustom {
                     }
 
                     if (state.equals("1")){
-                        if (battery<20){
+                        if (battery<10){
                             pole[i]= "sensor_0";
-                        }if (battery>=20&&battery>40){
+                            }
+                        if (battery>=10&&battery<25){
                             pole[i]= "sensor_1";
                             }
-                        if (battery>=40&&battery>60){
+                        if (battery>=25&&battery<50){
                             pole[i]= "sensor_2";
                         }
-                        if (battery>=60&&battery>80){
+                        if (battery>=50&&battery<75){
                             pole[i]= "sensor_3";
                         }
-                        if (battery>=80) {
+                        if (battery>=75) {
                             pole[i] = "sensor_4";
                         }
                     }
 
                     if (state.equals("2")){
-                        if (battery<20){
+                        if (battery<10){
                             pole[i]= "sensor_10";
-                        }if (battery>=20&&battery>40){
+                        }if (battery>=10&&battery<25){
                             pole[i]= "sensor_11";
                         }
-                        if (battery>=40&&battery>60){
+                        if (battery>=25&&battery<50){
                             pole[i]= "sensor_12";
                         }
-                        if (battery>=60&&battery>80){
+                        if (battery>=50&&battery<75){
                             pole[i]= "sensor_13";
                         }
-                        if (battery>=80){
+                        if (battery>=75){
                             pole[i]= "sensor_14";
                         }
                     }

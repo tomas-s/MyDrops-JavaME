@@ -174,42 +174,6 @@ public class ConnectToESP extends AppCompatActivity {
             Log.i("Aktivovana new wifi",Integer.toString(networkId));
         }
 
-/*
-        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        WifiInfo w = wifiManager.getConnectionInfo();
-        String networkSSID = "ESP8622";
-        String networkPass = "123123123";
-
-        WifiConfiguration conf = new WifiConfiguration();
-        conf.SSID = "\"" + networkSSID + "\"";   // Please note the quotes. String should contain ssid in quotes
-        conf.wepKeys[0] = "\"" + networkPass + "\"";
-        conf.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-        conf.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-        conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-        conf.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-        conf.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-        conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-        conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-        conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-        conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-        WifiInfo wifiInfi = wifiManager.getConnectionInfo();
-         networkId = wifiManager.addNetwork(conf);  // tu som zmazal deklaracia int
-        if (networkId >= 0) {
-            // Try to disable the current network and start a new one.
-        wifiManager.enableNetwork(networkId, true);
-
-
-        }
-
-*/
-
-        /*
-        Toast.makeText(MainActivity.this, "Je "+i+" integer: " ,
-                Toast.LENGTH_SHORT).show();
-        wifiManager.disconnect();
-        wifiManager.enableNetwork(i,true);
-        wifiManager.reconnect();
-        wifiManager.saveConfiguration();*/
     }
 
     public void connectToOldWifi(){

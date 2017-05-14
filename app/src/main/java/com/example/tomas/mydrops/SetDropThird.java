@@ -41,38 +41,14 @@ public class SetDropThird extends AppCompatActivity {
     }
     @Override
     protected void onDestroy() {
-        super.onStart();/*
-        Intent toMenuActivity = new Intent(SetDropThird.this, ShowDrops.class);
-        toMenuActivity.putExtra("sensors", sensors); Can not connect to server!]
-Wrong sensor ID - please configurate your device
-
-Mode: 1
-
-        toMenuActivity.putExtra("email", email);
-        startActivity(toMenuActivity);*/
+        super.onStart();
     }
 
 
 
 
     public void sendData(View view){
-/*
-        JsonObject json = new JsonObject();
-        json.addProperty("DeviceID", sensor_id);
-        json.addProperty("Setup", "0");
 
-        Ion.with(getApplicationContext())
-                .load("http://85.93.125.205:8126/api/setsetup")
-                .setJsonObjectBody(json)
-                .asJsonObject()
-                .setCallback(new FutureCallback<JsonObject>() {
-                    @Override
-                    public void onCompleted(Exception e, JsonObject result) {
-                        resultRequest = result.get("result").getAsString();
-                        Toast.makeText(getApplicationContext(),getResultRequest(),Toast.LENGTH_LONG).show();
-                    }
-                });
-                */
         Intent toMenuActivity = new Intent(SetDropThird.this, ShowDrops.class);
         toMenuActivity.putExtra("sensors", sensors);
         toMenuActivity.putExtra("email", email);

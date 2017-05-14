@@ -69,6 +69,12 @@ public class ConfigDropSecond extends AppCompatActivity {
         startActivity(toMenuActivity);*/
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        connectToOldWifi();
+    }
+
     public boolean validate() {
         boolean valid = true;
         EditText etSSID =(EditText) findViewById(R.id.e_SSID);
@@ -165,8 +171,9 @@ public class ConfigDropSecond extends AppCompatActivity {
             toSetDropThird.putExtra("email", email);
             toSetDropThird.putExtra("sensor_id", sensor_id);
             toSetDropThird.putExtra("id", id);
-            //toSetDropThird.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            toSetDropThird.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(toSetDropThird);
+            finish();
         }
         else {
             Toast.makeText(ConfigDropSecond.this, "You have to send a data", Toast.LENGTH_SHORT).show();

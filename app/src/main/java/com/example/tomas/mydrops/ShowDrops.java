@@ -47,7 +47,7 @@ public class ShowDrops extends AppCompatActivity {
 
 
         final String email = getIntent().getStringExtra("email");
-        final String sensors = getIntent().getStringExtra("sensors");
+        sensors = getIntent().getStringExtra("sensors");
         userId = getIntent().getStringExtra("id");
         JsonArrayCustom jsonArrayCustom = null;
         try {
@@ -57,7 +57,7 @@ public class ShowDrops extends AppCompatActivity {
             Toast.makeText(ShowDrops.this,"Chyba pri vytvarani JsonArray",Toast.LENGTH_SHORT).show();
         }
         try {
-            pole = jsonArrayCustom.sensorParse();
+            pole = jsonArrayCustom.sensorParse();   // !!!!!!!!!!!!tu je chyba vrati mi nespravne v resp pole s malym poctom prvkov
             finalList = jsonArrayCustom.getArrayList();
 
         } catch (JSONException e) {
@@ -125,9 +125,12 @@ public class ShowDrops extends AppCompatActivity {
                     toSetDropFirst.putExtra("id", userId);
                     startActivity(toSetDropFirst);
                 }
-
             }
         });
+    }
+
+    public int  plus(int x, int y){
+        return x+y;
     }
 
 
@@ -136,7 +139,7 @@ public class ShowDrops extends AppCompatActivity {
             Toast.makeText(ShowDrops.this, "Internet is not available", Toast.LENGTH_SHORT).show();
         }
             else {
-            String url = "http://85.93.125.205:8126/api/users/" + userId + "/sensors";
+            String url = LoginActivity.getUrl()+"/api/users/" + userId + "/sensors";
             final Context context = getApplicationContext();
             Ion.with(getApplicationContext())
                     .load(url)
@@ -144,21 +147,27 @@ public class ShowDrops extends AppCompatActivity {
                     .setCallback(new FutureCallback<String>() {
                         @Override
                         public void onCompleted(Exception e, String result) {
-                            JsonArrayCustom jsonArrayCustom = null;
-                            try {
-                                jsonArrayCustom = new JsonArrayCustom(result);
-                            } catch (JSONException b) {
-                                e.printStackTrace();
-                                Toast.makeText(ShowDrops.this, "Can not make a JSON", Toast.LENGTH_SHORT).show();
+                            if (result==null){
+                                Toast.makeText(ShowDrops.this, "Server is temporary offline", Toast.LENGTH_SHORT).show();
                             }
-                            try {
-                                pole = jsonArrayCustom.sensorParse();
-                                finalList = jsonArrayCustom.getArrayList();
+                            else {
+                                JsonArrayCustom jsonArrayCustom = null;
+                                sensors = result;
+                                try {
+                                    jsonArrayCustom = new JsonArrayCustom(result);
+                                } catch (JSONException b) {
+                                    e.printStackTrace();
+                                    Toast.makeText(ShowDrops.this, "Can not make a JSON", Toast.LENGTH_SHORT).show();
+                                }
+                                try {
+                                    pole = jsonArrayCustom.sensorParse();
+                                    finalList = jsonArrayCustom.getArrayList();
 
-                            } catch (JSONException b) {
-                                Toast.makeText(ShowDrops.this, "JSON parse error", Toast.LENGTH_SHORT).show();
+                                } catch (JSONException b) {
+                                    Toast.makeText(ShowDrops.this, "JSON parse error", Toast.LENGTH_SHORT).show();
+                                }
+                                gridview.setAdapter(new ImageAdapter(context, pole, finalList));
                             }
-                            gridview.setAdapter(new ImageAdapter(context, pole, finalList));
                         }
                     });
         }
@@ -239,10 +248,15 @@ public class ShowDrops extends AppCompatActivity {
 
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            if(convertView==null)
+            gridView = new View(mContext);
+            if(convertView==null) {
+                gridView = inflater.inflate(R.layout.gridview_row, null);
+            }
+            else
             {
-                gridView = new View(mContext);
-                gridView = inflater.inflate( R.layout.gridview_row , null);
+                gridView = (View) convertView;
+            }
+
 
 
                  ImageView imageViewStatus = (ImageView) gridView.findViewById(R.id.imageViewStatus);
@@ -278,38 +292,39 @@ public class ShowDrops extends AppCompatActivity {
                 }
 
 
-                if (battery<20){
+                if (battery<10){
                     textViewBatteryPercentage.setText("Battery: "+Integer.toString(battery)+"%");
                     imageViewBattery.setImageResource(R.drawable.battery_0_bars);
-                }if (battery>20&&battery<40){
+                }if (battery>=10&&battery<25){
                 textViewBatteryPercentage.setText("Battery: "+Integer.toString(battery)+"%");
                 imageViewBattery.setImageResource(R.drawable.battery_1_bar);
             }
-                if (battery>40&&battery<60){
+                if (battery>=25&&battery<50){
                     textViewBatteryPercentage.setText("Battery: "+Integer.toString(battery)+"%");
                     imageViewBattery.setImageResource(R.drawable.battery_2_bars);
                 }
-                if (battery>60&&battery<80){
+                if (battery>=50&&battery<75){
                     textViewBatteryPercentage.setText("Battery: "+Integer.toString(battery)+"%");
                     imageViewBattery.setImageResource(R.drawable.battery_3_bars);
                 }
-                if (battery>80) {
+                if (battery>=75) {
                     textViewBatteryPercentage.setText("Battery: "+Integer.toString(battery)+"%");
                     imageViewBattery.setImageResource(R.drawable.battery_4_bars);
                 }
 
 
 
+                return gridView;
 
 
-            }
+            /*
             else
             {
                 gridView = (View) convertView;
             }
+*/
 
 
-            return gridView;
         }
 
     }

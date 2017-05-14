@@ -36,11 +36,6 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".GraphActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".ShowDevices"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_show_devices"
-            android:theme="@style/AppTheme" />
         <activity android:name=".ShowDrops"
             android:screenOrientation="portrait"/>
         <activity android:name=".SetDropFirst"

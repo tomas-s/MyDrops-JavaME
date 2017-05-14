@@ -1,17 +1,6 @@
 package com.example.tomas.mydrops;
 
-/*
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.HttpParams;
-import org.json.JSONException;
-import org.json.JSONObject;
-*/
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -67,10 +56,6 @@ public class HttpClient {
 
 
 
-/*
-Zdroje:https://developer.android.com/training/volley/request.html
-http://hmkcode.com/android-send-json-data-to-server/
- */
 public static boolean makeRequestLogin(final Context context, RequestQueue queue, String url, final JSONObject request) {
 
 
@@ -82,34 +67,10 @@ public static boolean makeRequestLogin(final Context context, RequestQueue queue
                 @Override
 
                 public void onResponse(JSONObject responseObj) {
-
-
                         String s = responseObj.toString();
                         setResult(s);
                         Toast.makeText(context, getResult(), Toast.LENGTH_LONG).show();
                         setIsSucces(true);
-
-
-
-                        // Parsing json object response
-                        /*
-                        String message = responseObj.getString("id");
-
-                        if (message.length()>0) {
-                            // parsing the user profile information
-                            JSONArray users = responseObj.getJSONArray("user_email");   // TATO metoda nefunguje !!!!!!!!!!!!!!!! ale inak to ide oka vsetko
-
-                            //do what ever you want to do with your response
-
-                            //Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                             users.toString();
-
-
-                        } else {
-                            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                        }
-*/
-
 
                 }
             },

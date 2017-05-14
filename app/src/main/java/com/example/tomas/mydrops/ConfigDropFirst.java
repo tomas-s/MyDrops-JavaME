@@ -52,19 +52,8 @@ public class ConfigDropFirst extends AppCompatActivity {
     ConnectivityManager connManager;
     boolean isConnected= false;
     EditText eDevicePassword;
-    Thread t,t1;
-/*
-    public String getResult() {
-        return result;
-    }
+    Thread t;
 
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-
-
-    String result="no ok";*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,26 +64,6 @@ public class ConfigDropFirst extends AppCompatActivity {
         sensor_id= getIntent().getStringExtra("sensor_id");
         id=getIntent().getStringExtra("id");
         eDevicePassword =(EditText) findViewById(R.id.editTextDropPassword);
-
-
-/*
-            JsonObject json = new JsonObject();
-            json.addProperty("DeviceID", sensor_id);
-            json.addProperty("Setup", 1);
-
-            Ion.with(getApplicationContext())
-                    .load("http://85.93.125.205:8126/api/setsetup")
-                    .setJsonObjectBody(json)
-                    .asJsonObject()
-                    .setCallback(new FutureCallback<JsonObject>() {
-                        @Override
-                        public void onCompleted(Exception e, JsonObject result) {
-                            setResult(result.get("result").getAsString());
-                        }
-                    });
-*/
-
-
     }
 
 
@@ -102,7 +71,6 @@ public class ConfigDropFirst extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onStart();
-        connectToOldWifi();
     }
 
     @Override
@@ -122,9 +90,7 @@ public class ConfigDropFirst extends AppCompatActivity {
     }
 
     public void toNextActivity(View view){
-        if(validate(view)) {//false - ak je kratke heslo
-           // if (getResult().equals("ok")) {
-                // sensor_id = "$2y$10$2SdhktPrmZTRpJC0EzCpJ./PnXoX.K3ZOf8sHPOhUIG8fi.23S7TK";
+        if(validate(view)) {
                 final EditText editTextDropPassword = (EditText) findViewById(R.id.editTextDropPassword);
                 String password = editTextDropPassword.getText().toString();
                 String SSID;
@@ -148,46 +114,6 @@ public class ConfigDropFirst extends AppCompatActivity {
                 } else {
                     eDevicePassword.setError("Password is not valid");
                 }
-            /*Intent toSetDropSecond = new Intent(ConfigDropFirst.this, ConfigDropSecond.class);
-            toSetDropSecond.putExtra("sensor_id", getSensor_id());
-            toSetDropSecond.putExtra("sensors", sensors);
-            toSetDropSecond.putExtra("email", email);
-            toSetDropSecond.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);*/
-             /* t1 = new Thread() {
-                @Override
-                public void run() {
-
-
-                    Intent toSetDropSecond = new Intent(ConfigDropFirst.this, ConfigDropSecond.class);
-                    toSetDropSecond.putExtra("sensor_id", getSensor_id());
-                    toSetDropSecond.putExtra("sensors", sensors);
-                    toSetDropSecond.putExtra("email", email);
-                    toSetDropSecond.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                   while (isConnected==false){
-
-
-                   }
-                    if(isConnected) {
-                        startActivity(toSetDropSecond);
-                    }
-                    else {
-                        eDevicePassword.setError("Password is not valid");
-                    }
-
-                }
-            };
-            t1.start();
-            */
-            /*try {
-                t1.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }*/
-
-           // }
-            /*else {
-                Toast.makeText(getApplicationContext(), "Sensor ID not found", Toast.LENGTH_LONG).show();
-            }*/
         }
     }
 
@@ -306,67 +232,7 @@ public class ConfigDropFirst extends AppCompatActivity {
         });
         t.start();
 
-      //  progress.dismiss();
 
-
-/*
-        progress = new ProgressDialog(getApplicationContext());
-        //progress.setMessage("Connecting...");
-        progress = ProgressDialog.show(this, "Connecting",
-                "Connecting to wifi", true);
-        //progress.show();
-        while(!(mWifi.isConnected() && Ssid.equals("ESP"))){
-             wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-             Ssid = wifiManager.getConnectionInfo().getSSID().substring(1,4);
-             connManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-             mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-
-
-        }
-        progress.dismiss();
-        Toast.makeText(context,"Aktivnova nova wifi",Toast.LENGTH_LONG).show();
-*/
-
-
-
-
-
-/*
-        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        WifiInfo w = wifiManager.getConnectionInfo();
-        String networkSSID = "ESP8622";
-        String networkPass = "123123123";
-
-        WifiConfiguration conf = new WifiConfiguration();
-        conf.SSID = "\"" + networkSSID + "\"";   // Please note the quotes. String should contain ssid in quotes
-        conf.wepKeys[0] = "\"" + networkPass + "\"";
-        conf.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
-        conf.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
-        conf.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-        conf.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-        conf.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-        conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-        conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-        conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-        conf.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-        WifiInfo wifiInfi = wifiManager.getConnectionInfo();
-         networkId = wifiManager.addNetwork(conf);  // tu som zmazal deklaracia int
-        if (networkId >= 0) {
-            // Try to disable the current network and start a new one.
-        wifiManager.enableNetwork(networkId, true);
-
-
-        }
-
-*/
-
-        /*
-        Toast.makeText(MainActivity.this, "Je "+i+" integer: " ,
-                Toast.LENGTH_SHORT).show();
-        wifiManager.disconnect();
-        wifiManager.enableNetwork(i,true);
-        wifiManager.reconnect();
-        wifiManager.saveConfiguration();*/
     }
 
     public void connectToOldWifi(){

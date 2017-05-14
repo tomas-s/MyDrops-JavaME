@@ -52,7 +52,7 @@ public class SetDropFirst extends AppCompatActivity {
         json.addProperty("email", email);;
 
         Ion.with(getApplicationContext())
-                .load("http://85.93.125.205:8126/api/generateSN")
+                .load(LoginActivity.getUrl()+"/api/generateSN")
                 .setJsonObjectBody(json)
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -66,7 +66,6 @@ public class SetDropFirst extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onStart();
-        connectToOldWifi();
     }
 
     public void toNextActivity(View view){

@@ -58,6 +58,11 @@ public class SetDropSecond extends AppCompatActivity {
         Toast.makeText(SetDropSecond.this, sensor_id, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        connectToOldWifi();
+    }
 
     @Override
     protected void onDestroy() {
@@ -126,8 +131,10 @@ public class SetDropSecond extends AppCompatActivity {
             toSetDropThird.putExtra("email", email);
             toSetDropThird.putExtra("sensor_id", sensor_id);
             toSetDropThird.putExtra("id", id);
+            toSetDropThird.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             //toSetDropThird.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(toSetDropThird);
+            finish();
         }
         else {
             Toast.makeText(SetDropSecond.this, "You have to send a data", Toast.LENGTH_SHORT).show();

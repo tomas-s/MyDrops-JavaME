@@ -51,7 +51,7 @@ public class SignupActivity extends AppCompatActivity {
             progressDialog.show();
 
             Ion.with(getApplicationContext())
-                    .load("http://85.93.125.205:8126/api/register")
+                    .load(LoginActivity.getUrl()+"/api/register")
                     .setJsonObjectBody(json)
                     .asJsonObject()
                     .setCallback(new FutureCallback<JsonObject>() {

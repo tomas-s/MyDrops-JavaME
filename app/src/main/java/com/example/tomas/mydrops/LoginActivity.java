@@ -40,6 +40,10 @@ public class LoginActivity extends AppCompatActivity {
     String sensors=null;
     Intent toMenuActivity;
 
+
+
+    private  static String url = "http://drops.sde.cz/";//"http://85.93.125.205:8126";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public static String getUrl() {
+        return url;
+    }
 
 
     public static boolean isInternetAvailable(Context context) {
@@ -78,7 +85,12 @@ public class LoginActivity extends AppCompatActivity {
         return haveConnectedWifi || haveConnectedMobile;
     }
 
-
+    public boolean test() {
+        EditText editText = (EditText) findViewById(R.id.login);
+        if (editText.length()>0) {
+            return true;
+        } else return false;
+    }
 
     public void authentificaion(View view){
         if(!(isInternetAvailable(getApplicationContext()))){
@@ -108,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.show();
 
                 Ion.with(getApplicationContext())
-                        .load("http://85.93.125.205:8126/api/login")
+                        .load(getUrl()+"/api/login")
                         .setJsonObjectBody(json)
                         .asJsonObject()
                         .setCallback(new FutureCallback<JsonObject>() {
@@ -123,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                                     int confirmed = result.get("confirmed").getAsInt();
                                     toMenuActivity.putExtra("id", id);
                                     toMenuActivity.putExtra("email", email);
-                                    String url = "http://85.93.125.205:8126/api/users/" + id + "/sensors";
+                                    String url = getUrl()+"/api/users/" + id + "/sensors";
                                     if (confirmed == 1) {
 
                                         Ion.with(getApplicationContext())
