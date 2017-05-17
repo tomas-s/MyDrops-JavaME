@@ -50,12 +50,12 @@ public class SetDropSecond extends AppCompatActivity {
         spinner = (Spinner) findViewById(R.id.spinnerSendingTime);
         //spinner.setSelection(7);
         setContentView(R.layout.activity_set_drop_second);
-        addItems();
+      //  addItems();
         sensor_id = getIntent().getStringExtra("sensor_id");
         email = getIntent().getStringExtra("email");
         sensors = getIntent().getStringExtra("sensors");
         id=getIntent().getStringExtra("id");
-        Toast.makeText(SetDropSecond.this, sensor_id, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(SetDropSecond.this, sensor_id, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -70,7 +70,10 @@ public class SetDropSecond extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Metoda overi ci su vstupne textove polia vyplnene podla pozadaovanych kriterii
+     * @return false  - ak su validne , true ak nevalidne
+     */
     public boolean validate() {
         boolean valid = true;
         EditText etSSID =(EditText) findViewById(R.id.e_SSID);
@@ -105,7 +108,9 @@ public class SetDropSecond extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Meoda sluziaca na pripojenie zariadenia na WiFi
+     */
     public void connectToOldWifi(){
         WifiManager wfMgr = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
@@ -122,7 +127,11 @@ public class SetDropSecond extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Vyvola novu aktivitu a odosle potrene informacie
+     * vycisti zasobnik aktivit
+     * @param view
+     */
     public void toSetDropThird(View view){
         if (dataSended) {
             connectToOldWifi();
@@ -145,6 +154,10 @@ public class SetDropSecond extends AppCompatActivity {
 
     }
 
+    /**
+     * Odosle data na zariadenie
+     * @param view
+     */
     public void sendJsonToESP(View view){
         WifiManager wfMgr = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         String ssid = wfMgr.getConnectionInfo().getSSID().substring(1,4);
@@ -160,7 +173,7 @@ public class SetDropSecond extends AppCompatActivity {
             json.addProperty("ssidWifi", getSSID());
             json.addProperty("passwordWifi", getPass());
             json.addProperty("passwordAP", getDevicePassword());
-            json.addProperty("interval", getInterval());
+            //json.addProperty("interval", getInterval());
 
             //progressDialog = new ProgressDialog(SetDropSecond.this);
             progressDialog = ProgressDialog.show(this, "dialog title",
@@ -196,6 +209,7 @@ public class SetDropSecond extends AppCompatActivity {
         spinner.setSelection(6);
     }
 
+
     private int getResult(String s){
         int result=0;
         switch (s){
@@ -230,27 +244,40 @@ public class SetDropSecond extends AppCompatActivity {
         return result;
     }
 
+    /**
+     * Vrati SSID vlozeny v editexte
+     * @return
+     */
     public String getSSID(){
         EditText eSSID =(EditText) findViewById(R.id.e_SSID);
         return eSSID.getText().toString();
     }
 
+    /**
+     * Vrati passeord napisany v editexte
+     * @return
+     */
     public String getPass(){
         EditText ePassword =(EditText) findViewById(R.id.editTextPassword);
         return ePassword.getText().toString();
     }
 
+    /**
+     * Vrati password zariadenia napisany v editexte
+     * @return
+     */
     public String getDevicePassword(){
         EditText eDevicePassword =(EditText) findViewById(R.id.editTextDevicePassword);
         return eDevicePassword.getText().toString();
     }
 
+    /*
     public String getInterval(){
         spinner = (Spinner) findViewById(R.id.spinnerSendingTime);
         String pom = String.valueOf(spinner.getSelectedItem());
         int i = getResult(pom);
         return String.valueOf(i);
     }
-
+*/
 
 }

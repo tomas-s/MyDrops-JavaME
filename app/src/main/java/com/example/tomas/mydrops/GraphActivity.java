@@ -62,6 +62,7 @@ public class GraphActivity extends AppCompatActivity {
         textViewEsp.setText(espName);
     }
 
+
     public void toNextActivity(View view) {
         Intent toSetDropFirst = new Intent(GraphActivity.this, ConfigDropFirst.class);
         toSetDropFirst.putExtra("sensors", sensors);
@@ -73,6 +74,12 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Vykresli graf na zaklade parametrov
+     * @param pole - informacie o nameranych hodnotach
+     * @param lg
+     * @param range
+     */
     private void drawGraph(Integer[] pole, LineGraph lg, int range) {
         Line l = new Line();
         l.setColor(Color.BLACK);
@@ -98,6 +105,13 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Metoda prida novy bod na grafe
+     * @param l
+     * @param p
+     * @param x - xova suradnica
+     * @param y - Yonova suradnica
+     */
     private void addPoint(Line l, LinePoint p, int x, int y) {
         p = new LinePoint();
         p.setX(x);
@@ -106,6 +120,10 @@ public class GraphActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Metoda zisti data zo serveru v priapde ze telefon je pripojeny do WiFi siete alebo na mobilnych datach
+     * @param deviceID
+     */
     public void getData(String deviceID) {
         JsonObject json = new JsonObject();
         json.addProperty("DeviceID", deviceID);

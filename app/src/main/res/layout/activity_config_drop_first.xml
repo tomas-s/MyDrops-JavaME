@@ -64,7 +64,7 @@
         android:layout_alignStart="@+id/textView8" />
 
     <TextView
-        android:text="Two times press restart button on your Drop device then wait 5 second and click to Next"
+        android:text="Two times press restart button on your Drop device then wait 5 second. \nIf LED is lighting you will click to Next button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView9"

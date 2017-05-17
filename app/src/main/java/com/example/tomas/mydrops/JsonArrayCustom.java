@@ -54,11 +54,19 @@ public class JsonArrayCustom {
 
     }
 
-
+    /**
+     * Vrati pocet vytvorenych senzorov danneho uzivatela
+     * @return
+     */
     public int getSensorCount(){
         return  arrayList.size();
     }
 
+    /**
+     * Parsuje JSON format
+     * @return vrati pole dostupnych senzorov
+     * @throws JSONException
+     */
     public String[] sensorParse() throws JSONException {
         String[] pole = new String[getSensorCount()];
         
@@ -172,7 +180,11 @@ public class JsonArrayCustom {
     }
 
 
-
+    /**
+     * Vrati StavBaterie
+     * @return
+     * @throws JSONException
+     */
     public Integer[] getBattery() throws JSONException {
             List<Integer> list = new ArrayList<Integer>();
 
@@ -199,6 +211,11 @@ public class JsonArrayCustom {
         return battery;*/
     }
 
+    /**
+     * Vrati aktualny stav
+     * @return
+     * @throws JSONException
+     */
     public Integer[] getState() throws JSONException {
         List<Integer> list = new ArrayList<Integer>();
 

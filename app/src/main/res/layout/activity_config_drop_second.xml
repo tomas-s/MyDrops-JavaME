@@ -104,44 +104,6 @@
         android:layout_alignLeft="@+id/editTextPassword"
         android:layout_alignStart="@+id/editTextPassword" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBoxDevicePassword"
-        android:layout_above="@+id/textView13"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBoxResetInterval"
-        android:layout_alignBaseline="@+id/textView13"
-        android:layout_alignBottom="@+id/textView13"
-        android:layout_toStartOf="@+id/button7"
-        android:layout_alignRight="@+id/checkBoxDevicePassword"
-        android:layout_alignEnd="@+id/checkBoxDevicePassword" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerSendingTime"
-        android:layout_marginTop="13dp"
-        android:layout_below="@+id/checkBoxResetInterval"
-        android:layout_toRightOf="@+id/checkBoxResetInterval"
-        android:layout_toEndOf="@+id/checkBoxResetInterval" />
-
-    <TextView
-        android:text="Reset interval:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView13"
-        android:textSize="18sp"
-        android:layout_marginTop="15dp"
-        android:layout_below="@+id/editTextDevicePassword"
-        android:layout_alignLeft="@+id/button7"
-        android:layout_alignStart="@+id/button7" />
-
     <TextView
         android:text="Send only selected items"
         android:layout_width="wrap_content"
@@ -161,5 +123,14 @@
         android:layout_toRightOf="@+id/checkBoxDevicePassword"
         android:layout_toEndOf="@+id/checkBoxDevicePassword"
         android:layout_marginBottom="12dp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBoxDevicePassword"
+        android:layout_alignBaseline="@+id/editTextDevicePassword"
+        android:layout_alignBottom="@+id/editTextDevicePassword"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

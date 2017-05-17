@@ -110,15 +110,4 @@
         android:layout_alignLeft="@+id/textView13"
         android:layout_alignStart="@+id/textView13" />
 
-    <TextView
-        android:text="Reset interval:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView13"
-        android:textSize="18sp"
-        android:layout_marginTop="21dp"
-        android:layout_below="@+id/editTextDevicePassword"
-        android:layout_alignLeft="@+id/textView8"
-        android:layout_alignStart="@+id/textView8" />
-
 </RelativeLayout>

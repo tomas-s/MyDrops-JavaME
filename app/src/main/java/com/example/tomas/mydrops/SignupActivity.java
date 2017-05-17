@@ -27,7 +27,10 @@ public class SignupActivity extends AppCompatActivity {
         startActivity(SignupActivity);
     }
 
-
+    /**
+     * Vytvori novy ucet na webovom servery
+     * @param view
+     */
     public void createAccount(View view){
         EditText input_email =(EditText) findViewById(R.id.input_email);
         String email = input_email.getText().toString();
@@ -79,7 +82,12 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Overi validnost vlozenych udajov
+     * @param view
+     * @param email
+     * @return
+     */
 
     public boolean validate(View view, String email) {
         boolean valid = true;

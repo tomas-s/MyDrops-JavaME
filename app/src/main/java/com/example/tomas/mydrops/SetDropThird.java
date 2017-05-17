@@ -45,8 +45,10 @@ public class SetDropThird extends AppCompatActivity {
     }
 
 
-
-
+    /**
+     * Odosle data do zariadenia
+     * @param view
+     */
     public void sendData(View view){
 
         Intent toMenuActivity = new Intent(SetDropThird.this, ShowDrops.class);

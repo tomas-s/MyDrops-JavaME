@@ -133,7 +133,10 @@ public class ShowDrops extends AppCompatActivity {
         return x+y;
     }
 
-
+    /**
+     * Obnovi zoznam zariadeni
+     * @param view
+     */
     public void refreshDevice(View view){
         if(!(LoginActivity.isInternetAvailable(getApplicationContext()))){
             Toast.makeText(ShowDrops.this, "Internet is not available", Toast.LENGTH_SHORT).show();
@@ -195,7 +198,9 @@ public class ShowDrops extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Trieda parsuje zariadenie
+     */
     public class ImageAdapter extends BaseAdapter {
         private Context mContext;
         private Integer[] mThumbIds;

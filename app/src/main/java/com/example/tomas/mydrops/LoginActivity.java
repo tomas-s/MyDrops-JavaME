@@ -57,7 +57,11 @@ public class LoginActivity extends AppCompatActivity {
         return url;
     }
 
-
+    /**
+     * Overi dostpnost internetoveho pripojenia
+     * @param context
+     * @return
+     */
     public static boolean isInternetAvailable(Context context) {
         boolean haveConnectedWifi = false;
         boolean haveConnectedMobile = false;
@@ -92,6 +96,10 @@ public class LoginActivity extends AppCompatActivity {
         } else return false;
     }
 
+    /**
+     * Metoda Autentifikuje uzivatela  v priapde, ze autentifkacia je prejde vytvory novu aktivitu
+     * @param view
+     */
     public void authentificaion(View view){
         if(!(isInternetAvailable(getApplicationContext()))){
             Toast.makeText(LoginActivity.this, "Internet is not available", Toast.LENGTH_SHORT).show();

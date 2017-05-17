@@ -51,7 +51,7 @@ public class ConfigDropSecond extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         spinner = (Spinner) findViewById(R.id.spinnerSendingTime);
         setContentView(R.layout.activity_config_drop_second);
-        addItems();
+      //  addItems();
         sensor_id = getIntent().getStringExtra("sensor_id");
         id=getIntent().getStringExtra("id");
         email = getIntent().getStringExtra("email");
@@ -199,7 +199,7 @@ public class ConfigDropSecond extends AppCompatActivity {
                 json.addProperty("ssidWifi", getSSID());
                 json.addProperty("passwordWifi", getPass());
                 json.addProperty("passwordAP", getDevicePassword());
-                json.addProperty("interval", getInterval());
+                //json.addProperty("interval", getInterval());
 
                 //progressDialog = new ProgressDialog(SetDropSecond.this);
                 progressDialog = ProgressDialog.show(this, "dialog title",
@@ -304,6 +304,7 @@ public class ConfigDropSecond extends AppCompatActivity {
             return "";
     }
 
+    /*
     public String getInterval(){
         checkBoxResetInterval = (CheckBox) findViewById(R.id.checkBoxResetInterval);
         if(checkBoxResetInterval.isChecked()){
@@ -315,6 +316,6 @@ public class ConfigDropSecond extends AppCompatActivity {
         else
             return "";
     }
-
+*/
 
 }

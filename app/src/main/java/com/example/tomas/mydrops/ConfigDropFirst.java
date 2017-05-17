@@ -89,6 +89,10 @@ public class ConfigDropFirst extends AppCompatActivity {
         }
     }
 
+    /**
+     * Vyvola novu aktivitu
+     * @param view
+     */
     public void toNextActivity(View view){
         if(validate(view)) {
                 final EditText editTextDropPassword = (EditText) findViewById(R.id.editTextDropPassword);
@@ -117,7 +121,10 @@ public class ConfigDropFirst extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Metoda overi ci su vstupne textove polia vyplnene podla pozadaovanych kriterii
+     * @return false  - ak su validne , true ak nevalidne
+     */
     public boolean validate(View view) {
         boolean valid = true;
         EditText ePassword =(EditText) findViewById(R.id.editTextDropPassword);
@@ -134,7 +141,9 @@ public class ConfigDropFirst extends AppCompatActivity {
         }
         return valid;
     }
-
+    /**
+     * Meoda sluziaca na pripojenie zariadenia na WiFi
+     */
     public void connect(Context context,String ssid,String password)
     {
 
@@ -235,6 +244,9 @@ public class ConfigDropFirst extends AppCompatActivity {
 
     }
 
+    /**
+     * Pripoj do stare WiFi siete
+     */
     public void connectToOldWifi(){
         WifiManager wfMgr = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
@@ -250,7 +262,11 @@ public class ConfigDropFirst extends AppCompatActivity {
         }
     }
 
-
+    /**
+     * Overi ci je zariadenie pripojen
+     * @param context
+     * @return
+     */
     public static boolean isConnected(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
