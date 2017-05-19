@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    private  static String url = "http://drops.sde.cz/";//"http://85.93.125.205:8126";
+    private  static String url = "http://drops.sde.cz/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

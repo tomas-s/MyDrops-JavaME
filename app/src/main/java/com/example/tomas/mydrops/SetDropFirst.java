@@ -138,11 +138,8 @@ public class SetDropFirst extends AppCompatActivity {
 
         //int networkId = wfMgr.addNetwork(wfc);
         if (networkId != -1) {
-            // success, can call wfMgr.enab
-            // leNetwork(networkId, true) to connect
         }
         if(wfMgr.enableNetwork(networkId,true)){
-            //Toast.makeText(context,"Aktivnova nova wifi",Toast.LENGTH_LONG).show();
             Log.i("Aktivovana new wifi",Integer.toString(networkId));
         }
 
@@ -156,10 +153,8 @@ public class SetDropFirst extends AppCompatActivity {
         wfMgr.disconnect();     //disconect from current network
         int networkId = wfMgr.addNetwork(SetDropFirst.getOldConfiguration());
         if (networkId != -1) {
-            // success, can call wfMgr.enableNetwork(networkId, true) to connect
         }
         if(wfMgr.enableNetwork(networkId,true)){
-            //Toast.makeText(contex,"Aktivnova stara wifi",Toast.LENGTH_LONG).show();
             Log.i("Aktivovana old wifi",Integer.toString(networkId));
         }
     }

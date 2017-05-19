@@ -55,7 +55,6 @@ public class SetDropSecond extends AppCompatActivity {
         email = getIntent().getStringExtra("email");
         sensors = getIntent().getStringExtra("sensors");
         id=getIntent().getStringExtra("id");
-        //Toast.makeText(SetDropSecond.this, sensor_id, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -121,7 +120,6 @@ public class SetDropSecond extends AppCompatActivity {
             // success, can call wfMgr.enableNetwork(networkId, true) to connect
         }
         if(wfMgr.enableNetwork(networkId,true)){
-            //Toast.makeText(contex,"Aktivnova stara wifi",Toast.LENGTH_LONG).show();
             Log.i("Aktivovana old wifi",Integer.toString(networkId));
         }
     }
@@ -141,7 +139,6 @@ public class SetDropSecond extends AppCompatActivity {
             toSetDropThird.putExtra("sensor_id", sensor_id);
             toSetDropThird.putExtra("id", id);
             toSetDropThird.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            //toSetDropThird.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(toSetDropThird);
             finish();
         }
@@ -270,14 +267,4 @@ public class SetDropSecond extends AppCompatActivity {
         EditText eDevicePassword =(EditText) findViewById(R.id.editTextDevicePassword);
         return eDevicePassword.getText().toString();
     }
-
-    /*
-    public String getInterval(){
-        spinner = (Spinner) findViewById(R.id.spinnerSendingTime);
-        String pom = String.valueOf(spinner.getSelectedItem());
-        int i = getResult(pom);
-        return String.valueOf(i);
-    }
-*/
-
 }

@@ -322,14 +322,6 @@ public class ShowDrops extends AppCompatActivity {
                 return gridView;
 
 
-            /*
-            else
-            {
-                gridView = (View) convertView;
-            }
-*/
-
-
         }
 
     }

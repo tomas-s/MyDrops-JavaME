@@ -62,11 +62,6 @@ public class ConfigDropSecond extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onStart();
-        //connectToOldWifi();
-        /*Intent toMenuActivity = new Intent(SetDropSecond.this, ShowDrops.class);
-        toMenuActivity.putExtra("sensors", sensors);
-        toMenuActivity.putExtra("email", email);
-        startActivity(toMenuActivity);*/
     }
 
     @Override
@@ -149,8 +144,7 @@ public class ConfigDropSecond extends AppCompatActivity {
                     public void onResponse(String response) {
                         String r = response;
                         Log.d("Response:",response);
-                        // Display the first 500 characters of the response string.
-                        //mTextView.setText("Response is: "+ response.substring(0,500));
+
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -304,18 +298,6 @@ public class ConfigDropSecond extends AppCompatActivity {
             return "";
     }
 
-    /*
-    public String getInterval(){
-        checkBoxResetInterval = (CheckBox) findViewById(R.id.checkBoxResetInterval);
-        if(checkBoxResetInterval.isChecked()){
-            spinner = (Spinner) findViewById(R.id.spinnerSendingTime);
-            String pom = String.valueOf(spinner.getSelectedItem());
-            int i = getResult(pom);
-            return String.valueOf(i);
-        }
-        else
-            return "";
-    }
-*/
+
 
 }

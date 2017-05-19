@@ -43,19 +43,14 @@ public class ConnectToESP extends AppCompatActivity {
         connectToOldWifi();
     }
 
- /*
-    *convert and test convertion to INT
-    * create connect to ESP and send data
-    */
+
 
     public void setSendingTime(View view){
         spinner = (Spinner) findViewById(R.id.spinnerSendingTime);
-        //spinner.setSelection(8);
         String pom = String.valueOf(spinner.getSelectedItem());
         int i = getResult(pom);
         Toast.makeText(ConnectToESP.this, "Je "+i+" integer: " ,
                 Toast.LENGTH_SHORT).show();
-        //connectToOldWifi(view);
     }
 
 
@@ -143,11 +138,6 @@ public class ConnectToESP extends AppCompatActivity {
 
         int networkId = wfMgr.addNetwork(wfc);
 
-        /*if(!wfMgr.isWifiEnabled())
-        {
-            wfMgr.setWifiEnabled(true);
-        }
-*/
 
 
         WifiInfo oldWifi = wfMgr.getConnectionInfo();   //pouzit get configured info
@@ -167,8 +157,6 @@ public class ConnectToESP extends AppCompatActivity {
 
         //int networkId = wfMgr.addNetwork(wfc);
         if (networkId != -1) {
-            // success, can call wfMgr.enab
-            // leNetwork(networkId, true) to connect
         }
         if(wfMgr.enableNetwork(networkId,true)){
             Log.i("Aktivovana new wifi",Integer.toString(networkId));

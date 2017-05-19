@@ -121,44 +121,6 @@ public class JsonArrayCustom {
                     }
 
 
-                 /*
-                 if (state.equals("0")){
-                        if (battery<10){
-                            pole[i]= "sensor_0";
-                        }if (battery>=10&&battery>25){
-                            pole[i]= "sensor_1";
-                            }
-                        if (battery>=25&&battery>50){
-                            pole[i]= "sensor_2";
-                        }
-                        if (battery>=50&&battery>75){
-                            pole[i]= "sensor_3";
-                        }
-                        if (battery>=75) {
-                            pole[i] = "sensor_4";
-                        }
-                    }
-
-                    if (state.equals("1")){
-                        if (battery<10){
-                            pole[i]= "sensor_10";
-                        }if (battery>=10&&battery>25){
-                            pole[i]= "sensor_11";
-                        }
-                        if (battery>=25&&battery>50){
-                            pole[i]= "sensor_12";
-                        }
-                        if (battery>=50&&battery>75){
-                            pole[i]= "sensor_13";
-                        }
-                        if (battery>=75){
-                            pole[i]= "sensor_14";
-                        }
-                    }
-                 */
-
-
-
     }
         return pole;
 }
@@ -199,16 +161,6 @@ public class JsonArrayCustom {
         return array;
 
 
-/*
-//original
-            Integer[] battery;
-
-        for (int i = 0; i < sensorArray.length(); i++) {
-            JSONObject jsonobject = null;
-             jsonobject = sensorArray.getJSONObject(i);
-                 battery[i] = Integer.parseInt(jsonobject.getString("battery"));
-        }
-        return battery;*/
     }
 
     /**
